@@ -15,7 +15,6 @@
 - <img src="https://img.shields.io/badge/Passing-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white"/>
 - <img src="https://img.shields.io/badge/Security-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"/>
 - <img src="https://img.shields.io/badge/OpenAPI-%23121011?style=for-the-badge">
-![image](https://github.com/RoomRoomBnB/roombnb/assets/103111681/49bf5b9f-32cf-4c54-99f3-6d154279aae6)
 
 ###  ⚙기능구현
 *********************
@@ -32,10 +31,10 @@
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/x"><img src="https://github.com/RoomRoomBnB/roombnb/assets/103111681/37ff3cdb-bd2f-4deb-8152-d4dec7e90d00" width="100px;" alt="x"/><br /><sub><b> 박태준 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/x"><img src="https://avatars.githubusercontent.com/u/154823447?v=4" width="100px;" alt="x"/><br /><sub><b> 정현준 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/x"><img src="x" width="100px;" alt="x"/><br /><sub><b> 박태준 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/x"><img src="x;" alt="x"/><br /><sub><b> 정현준 </b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/yejin0901"><img src="https://avatars.githubusercontent.com/u/61917664?v=4" width="100px;" alt="x"/><br /><sub><b> 김예진 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/x"><img src="https://github.com/RoomRoomBnB/roombnb/assets/103111681/506242f6-eb07-4c28-9f00-caaaa3ed42dd" width="100px;" alt="x"/><br /><sub><b> 남지훈 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/x"><img src="x" width="100px;" alt="x"/><br /><sub><b> 남지훈 </b></sub></a><br /></td>
     </tr>
   </tbody>
 </table>
