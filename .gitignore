@@ -35,3 +35,13 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### yml ###
+/**/src/main/resources/application-dev.yml
+
+### JWT ###
+/**/src/main/resources/jwt.properties
+
+### DB env ###
+/**/src/main/resources/db.properties
