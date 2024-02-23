@@ -53,7 +53,8 @@
 
 ### 📐와이어프레임
 ****************
-![와이어프레임](https://github.com/RoomRoomBnB/roombnb/assets/47919911/245004a2-fe13-4fd9-8c8b-8f7900b16f2a)
+
 ### 🗂️ERD DIAGRAM
 *****************
-![erd리드미](https://github.com/RoomRoomBnB/roombnb/assets/103111681/e369e9eb-3d78-4e9c-b8ce-4e49099970e5)
+![image](https://github.com/nbcamp-if/ifstagram/assets/61917664/57aecef5-83b5-4675-b81b-250922a4c328)
+
