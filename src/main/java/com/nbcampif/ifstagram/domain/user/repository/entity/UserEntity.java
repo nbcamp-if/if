@@ -1,6 +1,6 @@
 package com.nbcampif.ifstagram.domain.user.repository.entity;
 
-import com.nbcampif.ifstagram.domain.common.entity.TimestampEntity;
+import com.nbcampif.ifstagram.domain.common.entity.Timestamped;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import jakarta.persistence.Column;
@@ -22,7 +22,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = "users")
 @SQLRestriction(value = "deleted_at is NULL")
 @SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE user_id = ?")
-public class UserEntity extends TimestampEntity {
+public class UserEntity extends Timestamped {
 
   @Id
   private Long userId;
