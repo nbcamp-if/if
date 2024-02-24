@@ -1,6 +1,5 @@
 package com.nbcampif.ifstagram.global.jwt;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,8 +16,7 @@ public class RefreshTokenEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "refresh_token_id")
-  private Long id;
+  private Long refreshTokenId;
   private Long userId;
   private String token;
 
