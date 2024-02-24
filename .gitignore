@@ -40,6 +40,9 @@ out/
 ### yml ###
 /**/src/main/resources/application-dev.yml
 
+### OAuth2 ###
+/**/src/main/resources/application-oauth2.yml
+
 ### JWT ###
 /**/src/main/resources/jwt.properties
 
