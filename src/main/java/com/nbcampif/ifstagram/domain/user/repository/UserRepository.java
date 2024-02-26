@@ -29,4 +29,8 @@ public class UserRepository {
   public boolean existsByRole(UserRole userRole) {
     return userJpaRepository.existsByRole(userRole);
   }
+
+  public User findByEmail(String email) {
+    return userJpaRepository.findByEmail(email);
+  }
 }
