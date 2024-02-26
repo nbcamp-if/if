@@ -54,7 +54,7 @@ public class UserEntity extends Timestamped {
         user.getProfileImage(),
         user.getIntroduction(),
         user.getReportedCount(),
-        user.getUserRole()
+        user.getRole()
     );
   }
 

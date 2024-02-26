@@ -37,14 +37,6 @@ public class User implements OAuth2User {
     this.role = role;
   }
 
-  public String getRole() {
-    return role.getRole();
-  }
-
-  public UserRole getUserRole() {
-    return role;
-  }
-
   @Override
   public Map<String, Object> getAttributes() {
     return Collections.emptyMap();
