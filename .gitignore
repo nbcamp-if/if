@@ -48,3 +48,6 @@ out/
 
 ### DB env ###
 /**/src/main/resources/db.properties
+
+### ADMIN ###
+/**/src/main/resources/admin.properties
