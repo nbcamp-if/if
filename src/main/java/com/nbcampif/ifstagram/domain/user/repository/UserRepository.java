@@ -1,5 +1,6 @@
 package com.nbcampif.ifstagram.domain.user.repository;
 
+import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.entity.UserEntity;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,4 +26,7 @@ public class UserRepository {
     return findUser(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
   }
 
+  public boolean existsByRole(UserRole userRole) {
+    return userJpaRepository.existsByRole(userRole);
+  }
 }
