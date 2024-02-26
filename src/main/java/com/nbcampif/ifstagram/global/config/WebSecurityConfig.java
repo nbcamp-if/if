@@ -38,7 +38,7 @@ public class WebSecurityConfig {
             .permitAll() // resources 접근 허용 설정
             .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**", "/api/v1/admin/login")
             .permitAll() // 인증 관련
-            .requestMatchers("/api/v1/admin/**").hasRole(UserRole.ADMIN.toString())
+            .requestMatchers("/api/v1/admin/**").permitAll()
             .requestMatchers("/v3/**", "/swagger-ui/**")
             .permitAll() // swagger
             .anyRequest()
