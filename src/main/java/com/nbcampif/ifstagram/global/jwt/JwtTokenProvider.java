@@ -101,7 +101,7 @@ public class JwtTokenProvider {
 
     Long userId = refreshTokenRepository.findUserIdByTokenOrElseThrow(refreshToken);
     User user = userRepository.findUserOrElseThrow(userId);
-    return generateAccessToken(user.getUserId(), user.getRole());
+    return generateAccessToken(user.getUserId(), user.getRole().getAuthority());
   }
 
   private String getRefreshTokenFromRequest(HttpServletRequest request) {
