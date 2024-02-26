@@ -53,7 +53,6 @@ public class CommentService {
                         .build());
     }
 
-    // 이 메소드는 postId에 해당하는 모든 댓글과 대댓글을 조회합니다.
     public ResponseEntity<CommonResponse<List<CommentResponseDto>>> getComment(Long postId) {
         List<CommentResponseDto> response = getCommentAndReplyList(postId);
         return ResponseEntity.ok()
