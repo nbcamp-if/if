@@ -61,11 +61,11 @@ public class AdminService {
     }
 
     public UserResponseDto searchUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
+      User user = userRepository.findUser(userId).orElseThrow(() ->
             new NotFoundUserException("해당 유저는 존재하지 않습니다.")
         );
 
-        UserResponseDto responseDto = new UserResponseDto(user);
+      UserResponseDto responseDto = UserResponseDto.of(user);
         return responseDto;
   }
 }
