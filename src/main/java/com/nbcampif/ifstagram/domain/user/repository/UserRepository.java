@@ -48,15 +48,4 @@ public class UserRepository {
     user.updateReportedCount();
   }
 
-  public Optional<User> findById(Long id){ return userJpaRepository.findById(id).map(UserEntity::toModel);};
-
-  public UserEntity save(User reportedUser) {
-    return userJpaRepository.save(UserEntity.fromModel(reportedUser));
-  }
-
-  public void updateReportedCount(User reportedUser){
-    UserEntity user = userJpaRepository.findById(reportedUser.getUserId())
-            .orElseThrow(()->new IllegalArgumentException("유저가 없습니다."));
-    user.updateReportedCount();
-  }
 }

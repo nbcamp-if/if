@@ -18,7 +18,7 @@ public class User implements OAuth2User {
   String nickname;
   String profileImage;
   String introduction;
-  Long reportedCount;
+  Long reportedCount = 0L;
   UserRole role;
 
   public User(Long userId, String email, String nickname, String profileImage) {

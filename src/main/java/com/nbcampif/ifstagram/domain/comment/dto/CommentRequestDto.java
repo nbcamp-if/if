@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDateTime;
 
 @Getter
-
 public class CommentRequestDto {
     private String content;
 }

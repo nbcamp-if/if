@@ -17,14 +17,14 @@ public class CommentResponseDto {
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
     private LocalDateTime deletedDate;
-    private String username;
+    private Long username;
     private String content;
     private List<CommentResponseDto> replyList = new ArrayList<>();
 
     public CommentResponseDto(Comment comment){
         this.postId = comment.getPostId();
         this.commentId = comment.getId();
-        this.username = "test";
+        this.username = comment.getUserId();
         this.content = comment.getContent();
         this.createDate = comment.getCreatedAt();
         this.modifiedDate = comment.getModifiedAt();

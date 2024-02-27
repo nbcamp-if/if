@@ -7,6 +7,7 @@ import com.nbcampif.ifstagram.domain.comment.repository.CommentRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.global.response.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
-//    private final PostRepository postRepository;
-    public ResponseEntity<CommonResponse<List<CommentResponseDto>>> createComment(CommentRequestDto requestDto, Long postId) {
-//        Post post = findPostById(postId);
-        Comment comment = new Comment(requestDto);
+//    private final PostRepository postRepository; // post repository 생성 후 수정
+    public ResponseEntity<CommonResponse<List<CommentResponseDto>>> createComment(CommentRequestDto requestDto, Long postId, User user) {
+//        Post post = findPostById(postId); // validate post in repository
+        Comment comment = new Comment(requestDto, user);
         comment.setPostId(postId);
-        comment.setUserId(1L);
-        comment.setParentCommentId(0L);
+        comment.setParentCommentId(0L); // root value
         commentRepository.save(comment);
         List<CommentResponseDto> response = getCommentAndReplyList(postId);
         return ResponseEntity.status(HttpStatus.OK)
@@ -35,13 +35,12 @@ public class CommentService {
     }
 
 
-    public ResponseEntity<CommonResponse<List<CommentResponseDto>>> createReplyComment(CommentRequestDto requestDto, Long postId, Long commentId) {
+    public ResponseEntity<CommonResponse<List<CommentResponseDto>>> createReplyComment(CommentRequestDto requestDto, Long postId, Long commentId, User user) {
 //        Post post = findPostById(postId);
         findCommentById(commentId);
-        Comment comment = new Comment(requestDto);
+        Comment comment = new Comment(requestDto, user);
         comment.setPostId(postId);
         comment.setParentCommentId(commentId);
-        comment.setUserId(1L);
         commentRepository.save(comment);
         List<CommentResponseDto> response = getCommentAndReplyList(postId);
         return ResponseEntity.status(HttpStatus.OK)
@@ -60,7 +59,7 @@ public class CommentService {
                         .build());
     }
 
-    public ResponseEntity<CommonResponse<List<CommentResponseDto>>> updateComment(CommentRequestDto requestDto, Long commentId, Long postId) {
+    public ResponseEntity<CommonResponse<List<CommentResponseDto>>> updateComment(CommentRequestDto requestDto, Long commentId, Long postId, User user) {
 //        findPostById(postId);
         Comment comment = findCommentById(commentId);
         comment.setContent(requestDto.getContent());

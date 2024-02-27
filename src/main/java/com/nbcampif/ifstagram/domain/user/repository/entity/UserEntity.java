@@ -41,7 +41,7 @@ public class UserEntity extends Timestamped {
   private String introduction;
 
   @Column
-  private Long reportedCount;
+  private Long reportedCount = 0L;
 
   @Column
   @Enumerated(value = EnumType.STRING)
@@ -64,7 +64,7 @@ public class UserEntity extends Timestamped {
   }
 
   public void updateReportedCount(){
-    this.reportedCount +=1;
+    this.reportedCount += 1;
   }
 
 
