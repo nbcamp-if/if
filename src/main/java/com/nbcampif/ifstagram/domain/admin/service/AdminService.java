@@ -67,5 +67,18 @@ public class AdminService {
 
       UserResponseDto responseDto = UserResponseDto.of(user);
         return responseDto;
-  }
+    }
+
+    public List<ReportReponseDto> searchReport(Long reportId) {
+        return null;
+    }
+
+    @Transactional
+    public void updateUser(Long userId, UserUpdateRequestDto requestDto) {
+      User user = userRepository.findUser(userId).orElseThrow(() ->
+        new NotFoundUserException("해당 유저는 존재하지 않습니다.")
+      );
+
+      userRepository.updateUser(requestDto, user);
+    }
 }

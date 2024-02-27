@@ -49,4 +49,33 @@ public class AdminController {
                 .build()
         );
     }
+
+    @GetMapping("/report/{reportId}")
+    public ResponseEntity<CommonResponse<List<ReportReponseDto>>> searchReport(
+        @PathVariable Long reportId,
+        @AuthenticationPrincipal User admin
+    ) {
+        List<ReportReponseDto> reponseList = adminService.searchReport(reportId);
+        return ResponseEntity.status(HttpStatus.OK.value()).body(
+            CommonResponse.<List<ReportReponseDto>>builder()
+                .message("신고 내역 조회 성공")
+                .data(reponseList)
+                .build()
+        );
+    }
+
+
+    @PutMapping("/user/{userId}")
+    public ResponseEntity<CommonResponse<Void>> updateUser(
+        @PathVariable Long userId,
+        @RequestBody UserUpdateRequestDto requestDto,
+        @AuthenticationPrincipal User admin
+    ) {
+        adminService.updateUser(userId, requestDto);
+        return ResponseEntity.status(HttpStatus.OK.value()).body(
+            CommonResponse.<Void>builder()
+                .message("유저 정보 수정 성공")
+                .build()
+        );
+  }
 }
