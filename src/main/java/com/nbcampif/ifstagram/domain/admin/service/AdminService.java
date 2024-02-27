@@ -2,6 +2,7 @@ package com.nbcampif.ifstagram.domain.admin.service;
 
 import com.nbcampif.ifstagram.domain.admin.dto.LoginRequestDto;
 import com.nbcampif.ifstagram.domain.user.UserRole;
+import com.nbcampif.ifstagram.domain.user.dto.UserResponseDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import com.nbcampif.ifstagram.global.exception.NotFoundUserException;
@@ -57,6 +58,14 @@ public class AdminService {
             user.getUserId(), user.getRole().getAuthority());
 
         jwtTokenProvider.addAccessTokenToCookie(accessToken, response);
-        jwtTokenProvider.addRefreshTokenToCookie(refreshToken, response);
+    }
+
+    public UserResponseDto searchUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+            new NotFoundUserException("해당 유저는 존재하지 않습니다.")
+        );
+
+        UserResponseDto responseDto = new UserResponseDto(user);
+        return responseDto;
     }
 }
