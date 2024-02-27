@@ -1,13 +1,16 @@
 package com.nbcampif.ifstagram.domain.post.controller;
 
 import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
+import com.nbcampif.ifstagram.domain.post.dto.PostResponseDto;
 import com.nbcampif.ifstagram.domain.post.entity.Post;
 import com.nbcampif.ifstagram.domain.post.service.PostService;
 import com.nbcampif.ifstagram.domain.user.model.User;
+import com.nbcampif.ifstagram.global.response.CommonResponse;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,40 +34,53 @@ public class PostController {
   private final PostService postService;
 
   @PostMapping
-  public String createPost(
+  public ResponseEntity<CommonResponse<Void>> createPost(
       @RequestPart(value = "data") PostRequestDto requestDto,
       @RequestPart(value = "file") MultipartFile image,
       @AuthenticationPrincipal User user) throws IOException {
 
     postService.createPost(requestDto, image, user);
 
-    return "게시글이 등록되었습니다.";
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+        CommonResponse.<Void>builder().message("게시글 생성").build());
   }
 
   @GetMapping
-  public ResponseEntity<List<Post>> getPostList() {
-    return new ResponseEntity<>(postService.getPostList(), HttpStatus.OK);
+  public ResponseEntity<CommonResponse<List<PostResponseDto>>> getPostList() {
+    List<PostResponseDto> responseDto = postService.getPostList();
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+        CommonResponse.<List<PostResponseDto>>builder()
+            .message("게시글 전체 조회 성공")
+            .data(responseDto)
+            .build());
   }
 
   @GetMapping("/{postId}")
-  public ResponseEntity<Post> getPost(
+  public ResponseEntity<CommonResponse<PostResponseDto>> getPost(
       @PathVariable Long postId) {
-    return new ResponseEntity<>(postService.getPost(postId), HttpStatus.OK);
+    PostResponseDto responseDto = postService.getPost(postId);
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+        CommonResponse.<PostResponseDto>builder()
+            .message("게시글 조회 성공")
+            .data(responseDto)
+            .build());
   }
 
   @PutMapping("/{postId}")
-  public String updatePost(
+  public ResponseEntity<CommonResponse<Void>> updatePost(
       @PathVariable Long postId,
       @RequestBody PostRequestDto requestDto) {
     postService.updatePost(postId, requestDto);
-    return "게시글이 수정되었습니다.";
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+        CommonResponse.<Void>builder().message("게시글 수정 성공").build());
   }
 
   @DeleteMapping("/{postId}")
-  public String deletePost(
+  public ResponseEntity<CommonResponse<Void>> deletePost(
       @PathVariable Long postId) {
     postService.deletePost(postId);
 
-    return "게시글이 삭제되었습니다.";
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+        CommonResponse.<Void>builder().message("게시글 삭제 성공").build());
   }
 }
