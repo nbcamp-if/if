@@ -2,12 +2,16 @@ package com.nbcampif.ifstagram.global.handler;
 
 import com.nbcampif.ifstagram.global.exception.NotFoundUserException;
 import com.nbcampif.ifstagram.global.exception.PermissionNotException;
+import com.nbcampif.ifstagram.global.response.CommonResponse;
 import com.nbcampif.ifstagram.global.response.ErrorResponse;
 import java.util.concurrent.RejectedExecutionException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.concurrent.RejectedExecutionException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
