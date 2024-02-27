@@ -93,4 +93,17 @@ public class AdminController {
         .build()
     );
   }
+
+  @DeleteMapping("/post/{postId}")
+  public ResponseEntity<CommonResponse<Void>> deletePost(
+    @PathVariable Long postId,
+    @AuthenticationPrincipal User admin
+  ) {
+    adminService.deletePost(postId);
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+      CommonResponse.<Void>builder()
+        .message("게시글 삭제 성공")
+        .build()
+    );
+  }
 }

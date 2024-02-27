@@ -42,7 +42,7 @@ public class ReportService {
     }
 
     private User findUser(Long id){
-        return userRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("신고할 사용자가 존재하지 않습니다."));
+        return userRepository.findUser(id).orElseThrow(()-> new IllegalArgumentException("신고할 사용자가 존재하지 않습니다."));
     }
 
 }

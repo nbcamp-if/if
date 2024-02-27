@@ -91,4 +91,12 @@ public class AdminService {
     postImageService.updateImage(post, image);
     post.updatePost(requestDto);
   }
+
+  @Transactional
+  public void deletePost(Long postId) {
+    Post post = postRepository.findById(postId)
+      .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
+    );
+    post.delete();
+  }
 }

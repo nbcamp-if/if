@@ -13,12 +13,14 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Getter
 @Table(name = "posts")
 @NoArgsConstructor
+
 public class Post extends Timestamped {
 
   @Id
@@ -71,6 +73,10 @@ public class Post extends Timestamped {
   public void updatePost(PostRequestDto requestDto) {
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
+  }
+
+  public void delete() {
+    this.deletedAt = LocalDateTime.now();
   }
 
 //  public Post(PostRequestDto requestDto, userDetails userDetails) {

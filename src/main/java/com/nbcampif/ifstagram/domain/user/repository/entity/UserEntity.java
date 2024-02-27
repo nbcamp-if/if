@@ -64,9 +64,6 @@ public class UserEntity extends Timestamped {
     return new User(userId, email, nickname, profileImage, introduction, reportedCount, role);
   }
 
-  public void updateReportedCount(){
-    this.reportedCount += 1;
-
   public void update(UserUpdateRequestDto requestDto) {
     Optional.ofNullable(requestDto.getNickname())
         .ifPresent(requestNickname -> this.nickname = requestNickname);
