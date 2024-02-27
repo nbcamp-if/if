@@ -30,11 +30,13 @@ public class UserRepository {
     return userJpaRepository.existsByRole(userRole);
   }
 
-  public User findByEmail(String email) {
-    return userJpaRepository.findByEmail(email);
+  public Optional<User> findByEmail(String email) {
+    return userJpaRepository.findByEmail(email).map(UserEntity::toModel);
   }
 
-  public Optional<User> findById(Long id){ return userJpaRepository.findById(id).map(UserEntity::toModel);};
+  public Optional<User> findById(Long id){
+    return userJpaRepository.findById(id).map(UserEntity::toModel);
+  };
 
   public UserEntity save(User reportedUser) {
     return userJpaRepository.save(UserEntity.fromModel(reportedUser));
