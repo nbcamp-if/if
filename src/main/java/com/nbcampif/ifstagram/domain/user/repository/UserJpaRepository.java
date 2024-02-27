@@ -9,5 +9,11 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
 
     boolean existsByRole(UserRole userRole);
 
+<<<<<<< HEAD
     Optional<UserEntity> findByEmail(String email);
+=======
+    User findByEmail(String email);
+
+    Optional<UserEntity> findById(Long id);
+>>>>>>> 8fc7917 (fix)
 }
