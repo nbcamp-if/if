@@ -83,24 +83,22 @@ public class JwtTokenProvider {
   }
 
   @Transactional
-  public String reGenerateAccessToken(HttpServletRequest request) {
-    String refreshTokenValue = getRefreshTokenFromRequest(request);
-    String refreshToken = substringToken(refreshTokenValue);
+  public String reGenerateAccessToken(String expiredToken) {
+    log.info("[Re-generate access token]");
+    User user = getUserFromToken(expiredToken);
+    String refreshToken = refreshTokenRepository.findTokenByUserIdOrElseThrow(user.getUserId());
     TokenState state = checkTokenState(refreshToken);
 
     if (state.equals(INVALID)) {
       log.info("[Refresh token invalid] {}", refreshToken);
       throw new JwtException("Invalid Token");
     }
-
     if (state.equals(EXPIRED)) {
       log.info("[Refresh token expired] {}", refreshToken);
       refreshTokenRepository.deleteToken(refreshToken);
       throw new JwtException("Expired Token");
     }
 
-    Long userId = refreshTokenRepository.findUserIdByTokenOrElseThrow(refreshToken);
-    User user = userRepository.findUserOrElseThrow(userId);
     return generateAccessToken(user.getUserId(), user.getRole().getAuthority());
   }
 
