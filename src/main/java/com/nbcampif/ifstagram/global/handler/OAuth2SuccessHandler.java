@@ -21,9 +21,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
   @Override
   public void onAuthenticationSuccess(
-      HttpServletRequest request,
-      HttpServletResponse response,
-      Authentication authentication
+      HttpServletRequest request, HttpServletResponse response, Authentication authentication
   ) throws ServletException, IOException {
     User user = (User) authentication.getPrincipal();
     Long userId = user.getUserId();
@@ -34,8 +32,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         .getAuthority());
 
     jwtTokenProvider.addAccessTokenToCookie(accessToken, response);
-
-    response.sendRedirect("http://localhost:8080/swagger-ui/index.html");
   }
 
 }
