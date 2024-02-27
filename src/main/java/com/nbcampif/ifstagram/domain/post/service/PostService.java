@@ -6,14 +6,17 @@ import com.nbcampif.ifstagram.domain.post.entity.Post;
 import com.nbcampif.ifstagram.domain.post.repository.PostRepository;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
+import com.nbcampif.ifstagram.global.response.CommonResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,19 +55,28 @@ public class PostService {
   }
 
   @Transactional(readOnly = true)
-  public List<Post> getPostList() {
-    return postRepository.findAll();
+  public List<PostResponseDto> getPostList() {
+    List<PostResponseDto> responseDtos = new ArrayList<>();
+    List<Post> postList = postRepository.findAll();
+    for (Post p : postList) {
+      PostResponseDto responseDto = new PostResponseDto(p);
+      List<PostResponseDto> responseDtoList = postRepository.findAll()
+          .stream().map(PostResponseDto::new).toList();
+      responseDto.setPostList(responseDtoList);
+      responseDtos.add(responseDto);
+    }
+    return responseDtos;
   }
 
   @Transactional(readOnly = true)
-  public Post getPost(Long postId) {
+  public PostResponseDto getPost(Long postId) {
     Post post = findPost(postId);
     PostResponseDto responseDto = new PostResponseDto(
         post.getTitle(),
         post.getContent(),
         post.getPostImg()
     );
-    return post;
+    return responseDto;
   }
 
   @Transactional
