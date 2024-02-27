@@ -5,6 +5,7 @@ import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.entity.UserEntity;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -46,5 +47,4 @@ public class UserRepository {
         .orElseThrow(() -> new IllegalArgumentException("유저가 없습니다."));
     user.updateReportedCount();
   }
-
 }

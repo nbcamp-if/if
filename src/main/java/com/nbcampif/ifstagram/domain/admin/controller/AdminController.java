@@ -2,21 +2,31 @@ package com.nbcampif.ifstagram.domain.admin.controller;
 
 import com.nbcampif.ifstagram.domain.admin.dto.LoginRequestDto;
 import com.nbcampif.ifstagram.domain.admin.service.AdminService;
+import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
+import com.nbcampif.ifstagram.domain.post.dto.PostResponseDto;
+import com.nbcampif.ifstagram.domain.user.dto.ReportReponseDto;
 import com.nbcampif.ifstagram.domain.user.dto.UserResponseDto;
+import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.global.response.CommonResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "Admin Controller", description = "관리자 컨트롤러")
 @RestController
@@ -28,55 +38,56 @@ public class AdminController {
 
   @PostMapping("/login")
   public ResponseEntity<CommonResponse<Void>> adminLogin(
-      @RequestBody LoginRequestDto requestDto,
-      HttpServletResponse response
+    @RequestBody LoginRequestDto requestDto,
+    HttpServletResponse response
   ) {
     adminService.login(requestDto, response);
     return ResponseEntity.status(HttpStatus.OK.value()).body(
-        CommonResponse.<Void>builder().message("로그인 성공").build()
+      CommonResponse.<Void>builder().message("로그인 성공").build()
     );
   }
-@GetMapping("/user/{userId}")
-    public ResponseEntity<CommonResponse<UserResponseDto>> searchUser(
-        @PathVariable Long userId,
-        @AuthenticationPrincipal User admin
-    ) {
-        UserResponseDto responseDto = adminService.searchUser(userId);
-        return ResponseEntity.status(HttpStatus.OK.value()).body(
-            CommonResponse.<UserResponseDto>builder()
-                .message("조회 성공")
-                .data(responseDto)
-                .build()
-        );
-    }
 
-    @GetMapping("/report/{reportId}")
-    public ResponseEntity<CommonResponse<List<ReportReponseDto>>> searchReport(
-        @PathVariable Long reportId,
-        @AuthenticationPrincipal User admin
-    ) {
-        List<ReportReponseDto> reponseList = adminService.searchReport(reportId);
-        return ResponseEntity.status(HttpStatus.OK.value()).body(
-            CommonResponse.<List<ReportReponseDto>>builder()
-                .message("신고 내역 조회 성공")
-                .data(reponseList)
-                .build()
-        );
-    }
+  @GetMapping("/user/{userId}")
+  public ResponseEntity<CommonResponse<UserResponseDto>> searchUser(
+    @PathVariable Long userId,
+    @AuthenticationPrincipal User admin
+  ) {
+    UserResponseDto responseDto = adminService.searchUser(userId);
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+      CommonResponse.<UserResponseDto>builder()
+        .message("조회 성공")
+        .data(responseDto)
+        .build()
+    );
+  }
+
+  @GetMapping("/report/{reportId}")
+  public ResponseEntity<CommonResponse<List<ReportReponseDto>>> searchReport(
+    @PathVariable Long reportId,
+    @AuthenticationPrincipal User admin
+  ) {
+    List<ReportReponseDto> reponseList = adminService.searchReport(reportId);
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+      CommonResponse.<List<ReportReponseDto>>builder()
+        .message("신고 내역 조회 성공")
+        .data(reponseList)
+        .build()
+    );
+  }
 
 
-    @PutMapping("/user/{userId}")
-    public ResponseEntity<CommonResponse<Void>> updateUser(
-        @PathVariable Long userId,
-        @RequestBody UserUpdateRequestDto requestDto,
-        @AuthenticationPrincipal User admin
-    ) {
-        adminService.updateUser(userId, requestDto);
-        return ResponseEntity.status(HttpStatus.OK.value()).body(
-            CommonResponse.<Void>builder()
-                .message("유저 정보 수정 성공")
-                .build()
-        );
+  @PutMapping("/user/{userId}")
+  public ResponseEntity<CommonResponse<Void>> updateUser(
+    @PathVariable Long userId,
+    @RequestBody UserUpdateRequestDto requestDto,
+    @AuthenticationPrincipal User admin
+  ) {
+    adminService.updateUser(userId, requestDto);
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+      CommonResponse.<Void>builder()
+        .message("유저 정보 수정 성공")
+        .build()
+    );
   }
 
   @PutMapping("/post/{postId}")
