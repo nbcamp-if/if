@@ -201,4 +201,11 @@ public class JwtTokenProvider {
     return userRepository.findUserOrElseThrow(userId);
   }
 
+  @Transactional
+  public void expireToken(
+      final Long userId
+  ) {
+    refreshTokenRepository.deleteTokenByUserId(userId);
+  }
+
 }
