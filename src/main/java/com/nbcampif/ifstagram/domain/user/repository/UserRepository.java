@@ -35,9 +35,10 @@ public class UserRepository {
     return userJpaRepository.existsByRole(userRole);
   }
 
-  public void updateUser(UserUpdateRequestDto requestDto, User savedUser) {
+  public User updateUser(UserUpdateRequestDto requestDto, User savedUser) {
     UserEntity userEntity = userJpaRepository.findById(savedUser.getUserId()).get();
     userEntity.update(requestDto);
+    return userEntity.toModel();
   }
 
   public void updateReportedCount(User reportedUser) {

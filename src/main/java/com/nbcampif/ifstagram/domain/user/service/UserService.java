@@ -6,6 +6,7 @@ import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.FollowRepository;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import com.nbcampif.ifstagram.global.response.CommonResponse;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,10 @@ public class UserService {
   public void follow(User user, Long toUserId) {
     Long fromUserId = user.getUserId();
 
+    if (Objects.equals(fromUserId, toUserId)) {
+      throw new IllegalArgumentException("자기 자신을 팔로우할 수 없습니다.");
+    }
+
     Optional<Follow> savedFollow = followRepository.findByFromUserIdAndToUserId(fromUserId, toUserId);
     if (savedFollow.isEmpty()) {
       followRepository.saveFollow(fromUserId, toUserId);
@@ -48,9 +53,8 @@ public class UserService {
 
   public User updateUser(UserUpdateRequestDto requestDto, User user) {
     User savedUser = userRepository.findUserOrElseThrow(user.getUserId());
-    userRepository.updateUser(requestDto, savedUser);
 
-    return null;
+    return userRepository.updateUser(requestDto, savedUser);
   }
 
 }
