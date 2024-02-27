@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Getter
@@ -36,7 +35,7 @@ public class Post {
   private Long repostCount;
   @Column(nullable = false)
   private Long userId;
-  //  @Column(nullable = false)
+    @Column(nullable = false)
   private Long repostId;
   @Column(nullable = false)
   private LocalDateTime createdAt;
@@ -56,7 +55,19 @@ public class Post {
     this.modifiedAt = LocalDateTime.now();
   }
 
-  public void updateRepost (RepostRequestDto requestDto, String postImage, Long postId) {
+  public Post(Post post, Long userId) {
+    this.title = post.getTitle();
+    this.content = post.getContent();
+    this.postImg = post.getPostImg();
+    this.likeCount = 0L;
+    this.repostCount = 0L;
+    this.userId = userId;
+    this.repostId = post.getPostId();
+    this.createdAt = LocalDateTime.now();
+    this.modifiedAt = LocalDateTime.now();
+  }
+
+  public void updateRepost(RepostRequestDto requestDto, String postImage, Long postId) {
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
     this.postImg = postImage;

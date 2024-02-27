@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class RepostResponseDto {
 
-  private String title;
-  private String content;
+  private final String title;
+  private final String content;
 //  private String postImg;
 
   public RepostResponseDto(String title, String content, String postImg) {
