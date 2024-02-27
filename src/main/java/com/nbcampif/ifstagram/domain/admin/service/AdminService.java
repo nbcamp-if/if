@@ -2,25 +2,28 @@ package com.nbcampif.ifstagram.domain.admin.service;
 
 import com.nbcampif.ifstagram.domain.admin.dto.LoginRequestDto;
 import com.nbcampif.ifstagram.domain.user.UserRole;
+import com.nbcampif.ifstagram.domain.user.dto.UserResponseDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
+import com.nbcampif.ifstagram.global.exception.NotFoundUserException;
+import com.nbcampif.ifstagram.global.exception.PermissionNotException;
 import com.nbcampif.ifstagram.global.jwt.JwtTokenProvider;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@DependsOn("userRepository")
 public class AdminService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Value("${admin.email}")
+    private String adminEmail;
+    
     @Value("${admin.password}")
     private String verifyPassword;
 
@@ -30,9 +33,9 @@ public class AdminService {
         if (!existsAdmin) {
             User admin = new User(
                 1L,
-                "admin@example.com",
+                adminEmail,
                 "admin",
-                "/img/admin.png",
+                null,
                 UserRole.ADMIN
             );
             userRepository.createUser(admin);
@@ -41,10 +44,28 @@ public class AdminService {
 
     public void login(LoginRequestDto requestDto, HttpServletResponse response) {
         String password = requestDto.getPassword();
-        User user = userRepository.findByEmail(requestDto.getEmail());
-        if (verifyPassword.equals(password) && user.getRole().equals(UserRole.ADMIN)) {
-            String accessToken = jwtTokenProvider.generateAccessToken(user.getUserId(), user.getRole().getAuthority());
-            jwtTokenProvider.addAccessTokenToCookie(accessToken, response);
+        User user = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() ->
+            new NotFoundUserException("해당 유저는 존재하지 않습니다.")
+        );
+        if (!verifyPassword.equals(password) || !user.getRole().equals(UserRole.ADMIN)) {
+            throw new PermissionNotException("허용되지 않은 권한입니다.");
         }
+
+        String accessToken = jwtTokenProvider.generateAccessToken(
+            user.getUserId(), user.getRole().getAuthority()
+        );
+        String refreshToken = jwtTokenProvider.generateRefreshToken(
+            user.getUserId(), user.getRole().getAuthority());
+
+        jwtTokenProvider.addAccessTokenToCookie(accessToken, response);
+    }
+
+    public UserResponseDto searchUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+            new NotFoundUserException("해당 유저는 존재하지 않습니다.")
+        );
+
+        UserResponseDto responseDto = new UserResponseDto(user);
+        return responseDto;
     }
 }

@@ -1,17 +1,18 @@
 package com.nbcampif.ifstagram.domain.comment.service;
 
-
-import com.nbcampif.ifstagram.global.dto.CommonResponse;
 import com.nbcampif.ifstagram.domain.comment.dto.CommentRequestDto;
 import com.nbcampif.ifstagram.domain.comment.dto.CommentResponseDto;
 import com.nbcampif.ifstagram.domain.comment.entity.Comment;
 import com.nbcampif.ifstagram.domain.comment.repository.CommentRepository;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nbcampif.ifstagram.global.response.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,10 +27,9 @@ public class CommentService {
         comment.setParentCommentId(0L);
         commentRepository.save(comment);
         List<CommentResponseDto> response = getCommentAndReplyList(postId);
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(CommonResponse.<List<CommentResponseDto>>builder()
-                        .statusCode(HttpStatus.OK.value())
-                        .msg("댓글이 생성되었습니다.")
+                        .message("댓글이 생성되었습니다.")
                         .data(response)
                         .build());
     }
@@ -44,21 +44,18 @@ public class CommentService {
         comment.setUserId(1L);
         commentRepository.save(comment);
         List<CommentResponseDto> response = getCommentAndReplyList(postId);
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(CommonResponse.<List<CommentResponseDto>>builder()
-                        .statusCode(HttpStatus.OK.value())
-                        .msg("대댓글이 생성되었습니다.")
+                        .message("대댓글이 생성되었습니다.")
                         .data(response)
                         .build());
     }
 
-    // 이 메소드는 postId에 해당하는 모든 댓글과 대댓글을 조회합니다.
     public ResponseEntity<CommonResponse<List<CommentResponseDto>>> getComment(Long postId) {
         List<CommentResponseDto> response = getCommentAndReplyList(postId);
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(CommonResponse.<List<CommentResponseDto>>builder()
-                        .statusCode(HttpStatus.OK.value())
-                        .msg("댓글이 조회되었습니다.")
+                        .message("댓글이 조회되었습니다.")
                         .data(response)
                         .build());
     }
@@ -69,20 +66,21 @@ public class CommentService {
         comment.setContent(requestDto.getContent());
         commentRepository.save(comment);
         List<CommentResponseDto> response = getCommentAndReplyList(postId);
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(CommonResponse.<List<CommentResponseDto>>builder()
-                        .statusCode(HttpStatus.OK.value())
-                        .msg("댓글이 수정되었습니다.")
+                        .message("댓글이 수정되었습니다.")
                         .data(response)
                         .build());
     }
 
-    public ResponseEntity<CommonResponse<List<CommentResponseDto>>> deleteComment(Long commentId) {
+    public ResponseEntity<CommonResponse<Void>> deleteComment(Long commentId) {
         Comment comment = findCommentById(commentId);
         comment.Delete();
         commentRepository.save(comment);
-        return ResponseEntity.ok()
-                .body(new CommonResponse<>(HttpStatus.OK.value(), "댓글이 삭제되었습니다", null));
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(CommonResponse.<Void>builder()
+                .message("댓글이 삭제되었습니다.")
+                .build());
     }
 
     private Comment findCommentById(Long commentId) {
