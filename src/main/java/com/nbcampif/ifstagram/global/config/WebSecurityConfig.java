@@ -38,8 +38,9 @@ public class WebSecurityConfig {
         request.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
             .permitAll() // resources 접근 허용 설정
             .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**", "/api/v1/admin/login")
-            .permitAll() // 인증 관련.requestMatchers("/api/v1/admin/**")
-        .hasRole(UserRole
+            .permitAll() // 인증 관련
+            .requestMatchers("/api/v1/admin/**")
+            .hasRole(UserRole
             .ADMIN.name())
             .requestMatchers("/v3/**", "/swagger-ui/**")
             .permitAll() // swagger

@@ -22,7 +22,7 @@ public class Repost {
   private Long userId; // 누군가의 글을 가져다 쓴 유저 id
 
   public Repost(Post savePostInfo, User user) {
-    this.repostId = savePostInfo.getPostId();
+    this.repostId = savePostInfo.getId();
     this.postId = savePostInfo.getRepostId();
     this.userId = user.getUserId();
   }

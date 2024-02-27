@@ -29,7 +29,7 @@ public class LikeService {
     // 로그인 유저 조회
     User userInfo = userRepository.findUser(user.getUserId()).orElseThrow(()
         -> new IllegalCallerException("일치하는 유저 없음"));
-    Like likeInfo = likeRepository.findByUserIdAndPostId(userInfo.getUserId(), postSeq.getPostId());
+    Like likeInfo = likeRepository.findByUserIdAndPostId(userInfo.getUserId(), postSeq.getId());
 
     // 사용자 확인: 사용자 아이디로 조회해서 해당 postId글에 좋아요했는지 조회
     Long count = 0L;
