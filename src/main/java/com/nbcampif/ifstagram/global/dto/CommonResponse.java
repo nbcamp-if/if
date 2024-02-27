@@ -1,4 +1,4 @@
-package com.nbcampif.ifstagram;
+package com.nbcampif.ifstagram.global.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

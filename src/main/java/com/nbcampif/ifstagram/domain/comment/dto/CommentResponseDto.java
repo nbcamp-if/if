@@ -1,9 +1,8 @@
-package com.nbcampif.ifstagram.dto;
+package com.nbcampif.ifstagram.domain.comment.dto;
 
 
-import com.nbcampif.ifstagram.entity.Comment;
+import com.nbcampif.ifstagram.domain.comment.entity.Comment;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -17,7 +16,7 @@ public class CommentResponseDto {
     private Long commentId;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
-    private String deletedDate;
+    private LocalDateTime deletedDate;
     private String username;
     private String content;
     private List<CommentResponseDto> replyList = new ArrayList<>();

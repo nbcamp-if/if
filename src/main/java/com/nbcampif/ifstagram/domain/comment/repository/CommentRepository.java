@@ -1,7 +1,7 @@
-package com.nbcampif.ifstagram.repository;
+package com.nbcampif.ifstagram.domain.comment.repository;
 
 
-import com.nbcampif.ifstagram.entity.Comment;
+import com.nbcampif.ifstagram.domain.comment.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

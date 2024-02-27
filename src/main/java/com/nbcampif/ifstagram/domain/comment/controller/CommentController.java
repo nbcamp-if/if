@@ -1,10 +1,10 @@
-package com.nbcampif.ifstagram.controller;
+package com.nbcampif.ifstagram.domain.comment.controller;
 
 
-import com.nbcampif.ifstagram.CommonResponse;
-import com.nbcampif.ifstagram.dto.CommentRequestDto;
-import com.nbcampif.ifstagram.dto.CommentResponseDto;
-import com.nbcampif.ifstagram.service.CommentService;
+import com.nbcampif.ifstagram.global.dto.CommonResponse;
+import com.nbcampif.ifstagram.domain.comment.dto.CommentRequestDto;
+import com.nbcampif.ifstagram.domain.comment.dto.CommentResponseDto;
+import com.nbcampif.ifstagram.domain.comment.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.nbcampif.ifstagram.domain.user.repository.entity;
 
-import com.nbcampif.ifstagram.domain.common.entity.Timestamped;
+import com.nbcampif.ifstagram.global.entity.Timestamped;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import jakarta.persistence.Column;
@@ -61,5 +61,10 @@ public class UserEntity extends Timestamped {
   public User toModel() {
     return new User(userId, email, nickname, profileImage, introduction, reportedCount, role);
   }
+
+  public void updateReportedCount(){
+    this.reportedCount +=1;
+  }
+
 
 }
