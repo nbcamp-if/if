@@ -1,18 +1,16 @@
 package com.nbcampif.ifstagram.domain.post.controller;
 
 import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
-import com.nbcampif.ifstagram.domain.post.dto.PostResponseDto;
 import com.nbcampif.ifstagram.domain.post.entity.Post;
 import com.nbcampif.ifstagram.domain.post.service.PostService;
-import jakarta.validation.Valid;
+import com.nbcampif.ifstagram.domain.user.model.User;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,18 +32,11 @@ public class PostController {
 
   @PostMapping
   public String createPost(
-      @Valid @RequestPart(value = "data") PostRequestDto requestDto,
+      @RequestPart(value = "data") PostRequestDto requestDto,
       @RequestPart(value = "file") MultipartFile image,
-      BindingResult result) throws IOException {
-    List<FieldError> fieldErrors = result.getFieldErrors();
-    if (!fieldErrors.isEmpty()) {
-      for (FieldError fieldError : fieldErrors) {
-        log.error(fieldError.getField() + " 필드" + fieldError.getDefaultMessage());
-      }
-      return "게시글 생성 중 문제가 발생했습니다.";
-    }
+      @AuthenticationPrincipal User user) throws IOException {
 
-    postService.createPost(requestDto, image);
+    postService.createPost(requestDto, image, user);
 
     return "게시글이 등록되었습니다.";
   }
@@ -56,7 +47,7 @@ public class PostController {
   }
 
   @GetMapping("/{postId}")
-  public ResponseEntity<PostResponseDto> getPost(
+  public ResponseEntity<Post> getPost(
       @PathVariable Long postId) {
     return new ResponseEntity<>(postService.getPost(postId), HttpStatus.OK);
   }

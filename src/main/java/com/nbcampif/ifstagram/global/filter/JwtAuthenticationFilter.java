@@ -82,8 +82,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private boolean isSwagger(final HttpServletRequest request) {
     String uri = request.getRequestURI();
     return uri.contains("swagger")
-           || uri.contains("api-docs")
-           || uri.contains("webjars");
+        || uri.contains("api-docs")
+        || uri.contains("webjars");
   }
 
 }

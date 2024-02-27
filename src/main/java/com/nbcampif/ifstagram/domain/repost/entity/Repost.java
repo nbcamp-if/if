@@ -1,12 +1,8 @@
 package com.nbcampif.ifstagram.domain.repost.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,14 +11,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "reposts")
 @NoArgsConstructor
 public class Repost {
+  private Long repostId; // 가져온 post id
+
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long repostId;
+  private Long postId; // 가져온 post를 생성할 때 생기는 post id 즉, repost된 게시글의 id
 
-  @Column
-  private Long postId;
-
-  @Column
-  private Long userId;
-
+  private Long userId; // 누군가의 글을 가져다 쓴 유저 id
 }

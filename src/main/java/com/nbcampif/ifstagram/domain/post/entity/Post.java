@@ -1,6 +1,7 @@
 package com.nbcampif.ifstagram.domain.post.entity;
 
 import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
+import com.nbcampif.ifstagram.domain.repost.dto.RepostRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,12 +12,14 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Getter
 @Table(name = "posts")
 @NoArgsConstructor
 public class Post {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long postId;
@@ -29,24 +32,37 @@ public class Post {
   private String postImg;
   @Column(nullable = false, columnDefinition = "BIGINT default 0")
   private Long likeCount;
-//  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "BIGINT default 0")
   private Long repostCount;
-//  @Column(nullable = false)
+  @Column(nullable = false)
   private Long userId;
-//  @Column(nullable = false)
+  //  @Column(nullable = false)
   private Long repostId;
   @Column(nullable = false)
   private LocalDateTime createdAt;
   @Column(nullable = false)
   private LocalDateTime modifiedAt;
-  @Column
+
   private LocalDateTime deletedAt;
 
-  public Post(PostRequestDto requestDto, String image) {
+  public Post(PostRequestDto requestDto, String image, Long userId) {
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
     this.postImg = image;
     this.likeCount = 0L;
+    this.repostCount = 0L;
+    this.userId = userId;
+    this.createdAt = LocalDateTime.now();
+    this.modifiedAt = LocalDateTime.now();
+  }
+
+  public void updateRepost (RepostRequestDto requestDto, String postImage, Long postId) {
+    this.title = requestDto.getTitle();
+    this.content = requestDto.getContent();
+    this.postImg = postImage;
+    this.repostId = postId;
+    this.likeCount = 0L;
+    this.repostCount = 0L;
     this.createdAt = LocalDateTime.now();
     this.modifiedAt = LocalDateTime.now();
   }
