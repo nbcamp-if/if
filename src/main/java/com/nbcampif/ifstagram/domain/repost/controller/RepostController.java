@@ -1,6 +1,5 @@
 package com.nbcampif.ifstagram.domain.repost.controller;
 
-import com.nbcampif.ifstagram.domain.repost.dto.RepostResponseDto;
 import com.nbcampif.ifstagram.domain.repost.service.RepostService;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import java.io.IOException;

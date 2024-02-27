@@ -7,6 +7,7 @@ import com.nbcampif.ifstagram.domain.post.repository.PostRepository;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,14 +35,10 @@ public class PostService {
 
     // 이미지 로직
     String fileName = image.getOriginalFilename(); // 내가 지정한 이미지명 등록
-    System.out.println("이미지 파일 명 : " + fileName);
     Path path = Paths.get(
         System.getProperty("user.home"), "Desktop", "IFstagram"); // 이미지가 저장될 경로 지정
-    System.out.println("이미지 저장할 디렉토리 생성 : " + path);
     Path filePath = path.resolve(uuid + fileName); // 파일의 경로 지정
-    System.out.println("파일 경로 지정 : " + filePath);
     String postImage = filePath + "";
-    System.out.println(postImage);
 
     if (!Files.exists(path)) {
       Files.createDirectories(path); // 디렉토리 생성
@@ -50,7 +47,6 @@ public class PostService {
     Files.copy(image.getInputStream(), filePath); // 파일 저장(파일입력스트림을 파일로 복사하여 로컬에 저장)
 
     Post post = new Post(requestDto, postImage, userInfo.getUserId());
-    System.out.println(post);
 
     postRepository.save(post);
   }
@@ -73,10 +69,6 @@ public class PostService {
 
   @Transactional
   public void updatePost(Long postId, PostRequestDto requestDto) {
-//    System.out.println(user.getUserId());
-//    System.out.println(user.getName());
-//    System.out.println(user.getEmail());
-//    System.out.println(user.getNickname());
 
     Post post = findPost(postId);
 

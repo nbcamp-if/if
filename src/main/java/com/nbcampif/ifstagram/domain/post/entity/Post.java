@@ -35,7 +35,7 @@ public class Post {
   private Long repostCount;
   @Column(nullable = false)
   private Long userId;
-    @Column(nullable = false)
+  @Column(nullable = true)
   private Long repostId;
   @Column(nullable = false)
   private LocalDateTime createdAt;
@@ -51,6 +51,7 @@ public class Post {
     this.likeCount = 0L;
     this.repostCount = 0L;
     this.userId = userId;
+    this.repostId = 0L;
     this.createdAt = LocalDateTime.now();
     this.modifiedAt = LocalDateTime.now();
   }
