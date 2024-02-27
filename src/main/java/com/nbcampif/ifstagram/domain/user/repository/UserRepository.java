@@ -34,7 +34,9 @@ public class UserRepository {
     return userJpaRepository.findByEmail(email).map(UserEntity::toModel);
   }
 
-  public Optional<User> findById(Long id){ return userJpaRepository.findById(id).map(UserEntity::toModel);};
+  public Optional<User> findById(Long id){
+    return userJpaRepository.findById(id).map(UserEntity::toModel);
+  };
 
   public UserEntity save(User reportedUser) {
     return userJpaRepository.save(UserEntity.fromModel(reportedUser));
