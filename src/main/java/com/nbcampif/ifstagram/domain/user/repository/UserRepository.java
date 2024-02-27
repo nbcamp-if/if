@@ -1,6 +1,7 @@
 package com.nbcampif.ifstagram.domain.user.repository;
 
 import com.nbcampif.ifstagram.domain.user.UserRole;
+import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.entity.UserEntity;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,25 +27,24 @@ public class UserRepository {
     return findUser(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
   }
 
-  public boolean existsByRole(UserRole userRole) {
-    return userJpaRepository.existsByRole(userRole);
-  }
-
   public Optional<User> findByEmail(String email) {
     return userJpaRepository.findByEmail(email).map(UserEntity::toModel);
   }
 
-  public Optional<User> findById(Long id){
-    return userJpaRepository.findById(id).map(UserEntity::toModel);
-  };
-
-  public UserEntity save(User reportedUser) {
-    return userJpaRepository.save(UserEntity.fromModel(reportedUser));
+  public boolean existsByRole(UserRole userRole) {
+    return userJpaRepository.existsByRole(userRole);
   }
 
-  public void updateReportedCount(User reportedUser){
+  public User updateUser(UserUpdateRequestDto requestDto, User savedUser) {
+    UserEntity userEntity = userJpaRepository.findById(savedUser.getUserId()).get();
+    userEntity.update(requestDto);
+    return userEntity.toModel();
+  }
+
+  public void updateReportedCount(User reportedUser) {
     UserEntity user = userJpaRepository.findById(reportedUser.getUserId())
-            .orElseThrow(()->new IllegalArgumentException("유저가 없습니다."));
+        .orElseThrow(() -> new IllegalArgumentException("유저가 없습니다."));
     user.updateReportedCount();
   }
+
 }
