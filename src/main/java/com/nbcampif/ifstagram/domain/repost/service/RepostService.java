@@ -2,13 +2,10 @@ package com.nbcampif.ifstagram.domain.repost.service;
 
 import com.nbcampif.ifstagram.domain.post.entity.Post;
 import com.nbcampif.ifstagram.domain.post.repository.PostRepository;
-import com.nbcampif.ifstagram.domain.repost.dto.RepostResponseDto;
 import com.nbcampif.ifstagram.domain.repost.entity.Repost;
 import com.nbcampif.ifstagram.domain.repost.repository.RepostRepository;
 import com.nbcampif.ifstagram.domain.user.model.User;
-import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import java.io.IOException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
