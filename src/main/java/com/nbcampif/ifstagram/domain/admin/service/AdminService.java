@@ -22,7 +22,7 @@ public class AdminService {
 
     @Value("${admin.email}")
     private String adminEmail;
-
+    
     @Value("${admin.password}")
     private String verifyPassword;
 

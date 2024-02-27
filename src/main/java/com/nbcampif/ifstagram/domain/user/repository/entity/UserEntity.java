@@ -28,6 +28,7 @@ public class UserEntity extends Timestamped {
   private Long userId;
 
   @Column(unique = true)
+
   private String email;
 
   @Column(nullable = false)
