@@ -9,6 +9,7 @@ import lombok.Getter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonResponse<T> {
 
-    private String message;
-    private T data;
+  private String message;
+  private T data;
+
 }

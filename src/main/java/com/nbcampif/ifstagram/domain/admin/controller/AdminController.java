@@ -24,20 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final AdminService adminService;
+  private final AdminService adminService;
 
-    @PostMapping("/login")
-    public ResponseEntity<CommonResponse<Void>> adminLogin(
-        @RequestBody LoginRequestDto requestDto,
-        HttpServletResponse response
-    ) {
-        adminService.login(requestDto, response);
-        return ResponseEntity.status(HttpStatus.OK.value()).body(
-            CommonResponse.<Void>builder().message("로그인 성공").build()
-        );
-    }
-
-    @GetMapping("/user/{userId}")
+  @PostMapping("/login")
+  public ResponseEntity<CommonResponse<Void>> adminLogin(
+      @RequestBody LoginRequestDto requestDto,
+      HttpServletResponse response
+  ) {
+    adminService.login(requestDto, response);
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+        CommonResponse.<Void>builder().message("로그인 성공").build()
+    );
+  }
+@GetMapping("/user/{userId}")
     public ResponseEntity<CommonResponse<UserResponseDto>> searchUser(
         @PathVariable Long userId,
         @AuthenticationPrincipal User admin

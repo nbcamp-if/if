@@ -1,6 +1,5 @@
 package com.nbcampif.ifstagram.global.config;
 
-import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.global.filter.JwtAuthenticationFilter;
 import com.nbcampif.ifstagram.global.handler.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
