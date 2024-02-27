@@ -1,22 +1,24 @@
 package com.nbcampif.ifstagram.domain.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nbcampif.ifstagram.domain.user.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponseDto {
 
-    private Long user_id;
-    private String email;
-    private String nickname;
-    private String profile_img;
-    private String introduction;
+  private String email;
+  private String introduction;
+  private String nickname;
+  private String profileImage;
+  private Long reportedCount;
 
-    public UserResponseDto(User user) {
-        this.user_id = user.getUserId();
-        this.email = user.getEmail();
-        this.nickname = user.getNickname();
-        this.profile_img = user.getProfileImage();
-        this.introduction = user.getIntroduction();
-    }
+
+  public static UserResponseDto of(User user) {
+    return new UserResponseDto(user.getEmail(), user.getIntroduction(), user.getNickname(), user.getProfileImage(), user.getReportedCount());
+  }
+
 }

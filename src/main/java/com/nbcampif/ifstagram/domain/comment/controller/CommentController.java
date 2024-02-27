@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/comments/post")
 public class CommentController {
-    private final CommentService commentService;
+
 
     @Operation(summary = "댓글 생성", description = "댓글 생성")
     @PostMapping("/{postId}")
@@ -58,10 +58,13 @@ public class CommentController {
         return commentService.updateComment(requestDto, commentId, postId, user);
     }
 
-    @Operation(summary = "댓글 삭제", description = "댓글 삭제")
-    @DeleteMapping("{commentId}")
-    public ResponseEntity<CommonResponse<Void>> deleteComment(
-            @PathVariable Long commentId) {
-        return commentService.deleteComment(commentId);
-    }
+  @Operation(summary = "댓글 삭제", description = "댓글 삭제")
+  @DeleteMapping("{commentId}")
+  public ResponseEntity<CommonResponse<Void>> deleteComment(
+      @PathVariable Long commentId
+  ) {
+    return commentService.deleteComment(commentId);
+  }
+
+
 }

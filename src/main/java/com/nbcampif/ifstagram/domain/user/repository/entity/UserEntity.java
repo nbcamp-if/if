@@ -1,14 +1,16 @@
 package com.nbcampif.ifstagram.domain.user.repository.entity;
 
-import com.nbcampif.ifstagram.global.entity.Timestamped;
 import com.nbcampif.ifstagram.domain.user.UserRole;
+import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
+import com.nbcampif.ifstagram.global.entity.Timestamped;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +30,6 @@ public class UserEntity extends Timestamped {
   private Long userId;
 
   @Column(unique = true)
-
   private String email;
 
   @Column(nullable = false)
@@ -65,7 +66,19 @@ public class UserEntity extends Timestamped {
 
   public void updateReportedCount(){
     this.reportedCount += 1;
+
+  public void update(UserUpdateRequestDto requestDto) {
+    Optional.ofNullable(requestDto.getEmail()).ifPresent(requestEmail -> this.email = requestEmail);
+    Optional.ofNullable(requestDto.getNickname())
+        .ifPresent(requestNickname -> this.nickname = requestNickname);
+    Optional.ofNullable(requestDto.getProfileImage())
+        .ifPresent(requestProfileImage -> this.profileImage = requestProfileImage);
+    Optional.ofNullable(requestDto.getIntroduction())
+        .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
   }
 
+  public void updateReportedCount() {
+    this.reportedCount += 1;
+  }
 
 }

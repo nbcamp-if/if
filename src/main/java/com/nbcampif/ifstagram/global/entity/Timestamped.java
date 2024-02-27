@@ -1,29 +1,30 @@
 package com.nbcampif.ifstagram.global.entity;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Timestamped {
 
+  @Temporal(TemporalType.TIMESTAMP)
+  protected LocalDateTime deletedAt;
   @CreatedDate
   @Column(updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime createdAt;
-
   @LastModifiedDate
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime modifiedAt;
-
-  @Temporal(TemporalType.TIMESTAMP)
-  protected LocalDateTime deletedAt;
 
 }

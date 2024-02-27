@@ -2,12 +2,11 @@ package com.nbcampif.ifstagram.domain.comment.dto;
 
 
 import com.nbcampif.ifstagram.domain.comment.entity.Comment;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Setter
 @Getter
@@ -30,5 +29,4 @@ public class CommentResponseDto {
         this.modifiedDate = comment.getModifiedAt();
         this.deletedDate = comment.getDeletedAt();
 
-    }
 }
