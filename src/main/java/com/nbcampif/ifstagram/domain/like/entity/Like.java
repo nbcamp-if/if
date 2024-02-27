@@ -13,10 +13,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "likes")
 @NoArgsConstructor
 public class Like {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long likeId;
+
   private Long userId;
+
   private Long postId;
 
   public Like(Long userId, Long postId) {
