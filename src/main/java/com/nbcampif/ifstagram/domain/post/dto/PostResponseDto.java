@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class PostResponseDto {
 
-  private String title;
-  private String content;
-  private String postImg;
+  private final String title;
+  private final String content;
+  private final String postImg;
 
   public PostResponseDto(String title, String content, String postImg) {
     this.title = title;

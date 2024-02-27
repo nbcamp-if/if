@@ -35,17 +35,16 @@ public class WebSecurityConfig {
         management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
     // config jwt filter
     http.authorizeHttpRequests(request ->
-            request.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                .permitAll() // resources 접근 허용 설정
-                .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**", "/api/v1/admin/login")
-                .permitAll() // 인증 관련
-                .requestMatchers("/api/v1/admin/**")
+        request.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+            .permitAll() // resources 접근 허용 설정
+            .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**", "/api/v1/admin/login")
+            .permitAll() // 인증 관련.requestMatchers("/api/v1/admin/**")
         .hasRole(UserRole
             .ADMIN.name())
-        .requestMatchers("/v3/**", "/swagger-ui/**")
-                .permitAll() // swagger
-                .anyRequest()
-                .authenticated()
+            .requestMatchers("/v3/**", "/swagger-ui/**")
+            .permitAll() // swagger
+            .anyRequest()
+            .authenticated()
     );
     // config oauth2 filter
     http.oauth2Login(oauth2 -> oauth2.authorizationEndpoint(authorization -> authorization.baseUri("/api/v1/auth/login"))

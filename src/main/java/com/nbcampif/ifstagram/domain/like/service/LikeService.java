@@ -6,8 +6,6 @@ import com.nbcampif.ifstagram.domain.post.entity.Post;
 import com.nbcampif.ifstagram.domain.post.repository.PostRepository;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
-import java.util.Objects;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,8 +40,7 @@ public class LikeService {
       // count 수를 올려서 수정
       postRepository.upCount(postId);
       count = postRepository.findById(postId).get().getLikeCount() + 1;
-    }
-    else {
+    } else {
       likeRepository.delete(likeInfo);
       postRepository.downCount(postId);
       count = postRepository.findById(postId).get().getLikeCount() - 1;

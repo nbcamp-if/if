@@ -30,7 +30,7 @@ public class PostService {
     String uuid = UUID.randomUUID().toString();
     // 이미지 저장 시 이름이 겹칠 수 없기 때문에 UUID를 통해 랜덤 문자열 더해서 저장
     User userInfo = userRepository.findUser(user.getUserId()).orElseThrow(()
-      -> new IllegalCallerException("존재하지 않는 회원입니다."));
+        -> new IllegalCallerException("존재하지 않는 회원입니다."));
 
     // 이미지 로직
     String fileName = image.getOriginalFilename(); // 내가 지정한 이미지명 등록
