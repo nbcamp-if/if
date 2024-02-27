@@ -55,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       throw new JwtException("Invalid Token");
     }
     if (tokenState == TokenState.EXPIRED) {
-      String accessTokenWithBearer = jwtTokenProvider.reGenerateAccessToken(request);
+      String accessTokenWithBearer = jwtTokenProvider.reGenerateAccessToken(token);
       jwtTokenProvider.addAccessTokenToCookie(accessTokenWithBearer, response);
     }
 

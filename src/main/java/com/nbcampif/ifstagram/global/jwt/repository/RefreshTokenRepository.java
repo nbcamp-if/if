@@ -16,6 +16,12 @@ public class RefreshTokenRepository {
     refreshTokenJpaRepository.save(entity);
   }
 
+  public String findTokenByUserIdOrElseThrow(Long userId) {
+    return refreshTokenJpaRepository.findByUserId(userId)
+        .map(RefreshTokenEntity::getToken)
+        .orElseThrow(() -> new EntityNotFoundException("RefreshTokenEntity not found"));
+  }
+
   public Long findUserIdByTokenOrElseThrow(String refreshToken) {
     return refreshTokenJpaRepository.findByToken(refreshToken)
         .map(RefreshTokenEntity::getUserId)
