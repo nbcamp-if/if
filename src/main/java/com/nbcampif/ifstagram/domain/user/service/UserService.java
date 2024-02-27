@@ -5,10 +5,9 @@ import com.nbcampif.ifstagram.domain.user.model.Follow;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.FollowRepository;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
-import com.nbcampif.ifstagram.global.dto.CommonResponse;
+import com.nbcampif.ifstagram.global.response.CommonResponse;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +21,12 @@ public class UserService {
   private final FollowRepository followRepository;
 
 
-  public ResponseEntity<CommonResponse<?>> reportUser(Long userId) {
+  public ResponseEntity<CommonResponse<Void>> reportUser(Long userId) {
     User reportedUser = findUserById(userId);
     System.out.println(userId);
     userRepository.updateReportedCount(reportedUser);
 
-    return ResponseEntity.ok()
-        .body(new CommonResponse<>(HttpStatus.OK.value(), "유저가 신고되었습니다", null));
+    return CommonResponse.ok("유저가 신고되었습니다", null);
   }
 
   public User findUserById(Long id) {

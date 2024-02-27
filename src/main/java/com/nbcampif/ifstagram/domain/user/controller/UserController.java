@@ -4,7 +4,7 @@ import com.nbcampif.ifstagram.domain.user.dto.UserResponseDto;
 import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.service.UserService;
-import com.nbcampif.ifstagram.global.dto.CommonResponse;
+import com.nbcampif.ifstagram.global.response.CommonResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class UserController {
 
   @Operation(summary = "회원 신고", description = "회원 신고")
   @PostMapping("/{userId}")
-  public ResponseEntity<CommonResponse<?>> reportUser(
+  public ResponseEntity<CommonResponse<Void>> reportUser(
       @PathVariable Long userId
   ) {
     System.out.println(userId);
@@ -35,26 +35,28 @@ public class UserController {
   }
 
   @GetMapping("/my-page")
-  public ResponseEntity<UserResponseDto> myPage(@AuthenticationPrincipal User user) {
-    return ResponseEntity.ok(UserResponseDto.of(user));
+  public ResponseEntity<CommonResponse<UserResponseDto>> myPage(
+      @AuthenticationPrincipal User user
+  ) {
+    return CommonResponse.ok("조회 성공", UserResponseDto.of(user));
   }
 
   @PostMapping("/{userId}/follow")
-  public ResponseEntity<Void> follow(
-      @PathVariable(name = "userId") Long toUserId,
-      @AuthenticationPrincipal User user
+  public ResponseEntity<CommonResponse<Void>> follow(
+      @PathVariable(name = "userId") Long toUserId, @AuthenticationPrincipal User user
   ) {
     userService.follow(user, toUserId);
-    return ResponseEntity.ok().build();
+
+    return CommonResponse.ok("팔로우 성공", null);
   }
 
   @PutMapping("/my-page")
-  public ResponseEntity<UserResponseDto> updateUser(
-      @Validated UserUpdateRequestDto requestDto,
-      @AuthenticationPrincipal User user
+  public ResponseEntity<CommonResponse<UserResponseDto>> updateUser(
+      @Validated UserUpdateRequestDto requestDto, @AuthenticationPrincipal User user
   ) {
     User updatedUser = userService.updateUser(requestDto, user);
-    return ResponseEntity.ok(UserResponseDto.of(updatedUser));
+
+    return CommonResponse.ok("수정 성공", UserResponseDto.of(updatedUser));
   }
 
 }
