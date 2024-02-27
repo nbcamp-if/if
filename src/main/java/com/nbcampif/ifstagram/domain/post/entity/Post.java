@@ -12,9 +12,11 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter // entity 테스트하기 위해 추가했습니다.
 @Table(name = "posts")
 @NoArgsConstructor
 public class Post {

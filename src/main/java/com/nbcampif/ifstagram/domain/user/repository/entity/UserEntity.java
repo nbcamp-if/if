@@ -4,18 +4,14 @@ import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.global.entity.Timestamped;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.util.Optional;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor
@@ -26,59 +22,58 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE user_id = ?")
 public class UserEntity extends Timestamped {
 
-  @Id
-  private Long userId;
+    @Id
+    private Long userId;
 
-  @Column(unique = true)
-  private String email;
+    @Column(unique = true)
+    private String email;
 
-  @Column(nullable = false)
-  private String nickname;
+    @Column(nullable = false)
+    private String nickname;
 
-  @Column
-  private String profileImage;
+    @Column
+    private String profileImage;
 
-  @Column
-  private String introduction;
+    @Column
+    private String introduction;
 
-  @Column
-  private Long reportedCount = 0L;
+    @Column
+    private Long reportedCount = 0L;
 
-  @Column
-  @Enumerated(value = EnumType.STRING)
-  private UserRole role;
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private UserRole role;
 
-  public static UserEntity fromModel(User user) {
-    return new UserEntity(
-        user.getUserId(),
-        user.getEmail(),
-        user.getNickname(),
-        user.getProfileImage(),
-        user.getIntroduction(),
-        user.getReportedCount(),
-        user.getRole()
-    );
-  }
+    public static UserEntity fromModel(User user) {
+        return new UserEntity(
+                user.getUserId(),
+                user.getEmail(),
+                user.getNickname(),
+                user.getProfileImage(),
+                user.getIntroduction(),
+                user.getReportedCount(),
+                user.getRole()
+        );
+    }
 
-  public User toModel() {
-    return new User(userId, email, nickname, profileImage, introduction, reportedCount, role);
-  }
+    public User toModel() {
+        return new User(userId, email, nickname, profileImage, introduction, reportedCount, role);
+    }
 
-  public void updateReportedCount(){
-    this.reportedCount += 1;
 
-  public void update(UserUpdateRequestDto requestDto) {
-    Optional.ofNullable(requestDto.getEmail()).ifPresent(requestEmail -> this.email = requestEmail);
-    Optional.ofNullable(requestDto.getNickname())
-        .ifPresent(requestNickname -> this.nickname = requestNickname);
-    Optional.ofNullable(requestDto.getProfileImage())
-        .ifPresent(requestProfileImage -> this.profileImage = requestProfileImage);
-    Optional.ofNullable(requestDto.getIntroduction())
-        .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
-  }
+    public void update(UserUpdateRequestDto requestDto) {
+        Optional.ofNullable(requestDto.getEmail()).ifPresent(requestEmail -> this.email = requestEmail);
+        Optional.ofNullable(requestDto.getNickname())
+                .ifPresent(requestNickname -> this.nickname = requestNickname);
+        Optional.ofNullable(requestDto.getProfileImage())
+                .ifPresent(requestProfileImage -> this.profileImage = requestProfileImage);
+        Optional.ofNullable(requestDto.getIntroduction())
+                .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
+    }
 
-  public void updateReportedCount() {
-    this.reportedCount += 1;
-  }
+    public void updateReportedCount() {
+        this.reportedCount += 1;
+    }
+
 
 }

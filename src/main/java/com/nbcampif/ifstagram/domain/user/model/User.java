@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Getter
+@Setter // entity 테스트 하기 위해 추가했습니다.
 @AllArgsConstructor
 public class User implements OAuth2User {
 
