@@ -79,6 +79,16 @@ public class AdminService {
         new NotFoundUserException("해당 유저는 존재하지 않습니다.")
       );
 
-      userRepository.updateUser(requestDto, user);
-    }
+    userRepository.updateUser(requestDto, user);
+  }
+
+  @Transactional
+  public void updatePost(Long postId, PostRequestDto requestDto, MultipartFile image)
+    throws IOException {
+
+    Post post = postRepository.findById(postId)
+      .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+    postImageService.updateImage(post, image);
+    post.updatePost(requestDto);
+  }
 }

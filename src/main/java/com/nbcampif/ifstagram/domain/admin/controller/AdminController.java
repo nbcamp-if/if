@@ -78,4 +78,19 @@ public class AdminController {
                 .build()
         );
   }
+
+  @PutMapping("/post/{postId}")
+  public ResponseEntity<CommonResponse<Void>> updatePost(
+    @PathVariable Long postId,
+    @RequestPart(value = "data") PostRequestDto requestDto,
+    @RequestPart(value = "file") MultipartFile image,
+    @AuthenticationPrincipal User admin
+  ) throws IOException {
+    adminService.updatePost(postId, requestDto, image);
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+      CommonResponse.<Void>builder()
+        .message("게시글 수정 성공")
+        .build()
+    );
+  }
 }
