@@ -2,8 +2,10 @@ package com.nbcampif.ifstagram.global.handler;
 
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.global.jwt.JwtTokenProvider;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -22,7 +24,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
       HttpServletRequest request,
       HttpServletResponse response,
       Authentication authentication
-  ) {
+  ) throws ServletException, IOException {
     User user = (User) authentication.getPrincipal();
     Long userId = user.getUserId();
 
@@ -32,7 +34,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         .getAuthority());
 
     jwtTokenProvider.addAccessTokenToCookie(accessToken, response);
-    jwtTokenProvider.addRefreshTokenToCookie(refreshToken, response);
+
+    response.sendRedirect("http://localhost:8080/swagger-ui/index.html");
   }
 
 }
