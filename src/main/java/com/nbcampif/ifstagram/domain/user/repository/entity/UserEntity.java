@@ -1,9 +1,9 @@
 package com.nbcampif.ifstagram.domain.user.repository.entity;
 
-import com.nbcampif.ifstagram.domain.common.entity.Timestamped;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
+import com.nbcampif.ifstagram.global.entity.Timestamped;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -74,9 +74,8 @@ public class UserEntity extends Timestamped {
         .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
   }
 
-  public void updateReportedCount(){
-    this.reportedCount +=1;
+  public void updateReportedCount() {
+    this.reportedCount += 1;
   }
-
 
 }

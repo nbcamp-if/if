@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CommonResponse<T> {
 
-    private Integer statusCode;
-    private String msg;
-    private T data;
+  private Integer statusCode;
+  private String msg;
+  private T data;
 
 }

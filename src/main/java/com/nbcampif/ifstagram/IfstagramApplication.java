@@ -5,8 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class IfstagramApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(IfstagramApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(IfstagramApplication.class, args);
+  }
 
 }

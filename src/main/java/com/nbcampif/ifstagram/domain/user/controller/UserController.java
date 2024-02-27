@@ -21,16 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/reports/users")
 @RestController
 public class UserController {
-    private final UserService userService;
-    //신고기능
 
-    @Operation(summary = "회원 신고", description = "회원 신고")
-    @PostMapping("/{userId}")
-    public ResponseEntity<CommonResponse<?>> reportUser(
-            @PathVariable Long userId) {
-        System.out.println(userId);
-        return userService.reportUser(userId);
-    }
+  private final UserService userService;
+  //신고기능
+
+  @Operation(summary = "회원 신고", description = "회원 신고")
+  @PostMapping("/{userId}")
+  public ResponseEntity<CommonResponse<?>> reportUser(
+      @PathVariable Long userId
+  ) {
+    System.out.println(userId);
+    return userService.reportUser(userId);
+  }
 
   @GetMapping("/my-page")
   public ResponseEntity<UserResponseDto> myPage(@AuthenticationPrincipal User user) {
