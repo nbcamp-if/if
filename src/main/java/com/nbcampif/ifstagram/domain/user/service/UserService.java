@@ -30,7 +30,7 @@ public class UserService {
   }
 
   public User findUserById(Long id) {
-    return userRepository.findById(id)
+    return userRepository.findUser(id)
         .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
   }
 
