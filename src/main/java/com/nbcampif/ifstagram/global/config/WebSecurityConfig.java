@@ -1,6 +1,5 @@
 package com.nbcampif.ifstagram.global.config;
 
-import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.global.filter.JwtAuthenticationFilter;
 import com.nbcampif.ifstagram.global.handler.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +35,8 @@ public class WebSecurityConfig {
     http.authorizeHttpRequests(request ->
         request.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
             .permitAll() // resources 접근 허용 설정
-            .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**")
+            .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**", "/api/v1/admin/login")
             .permitAll() // 인증 관련
-            .requestMatchers("/api/v1/admin/**").permitAll()
             .requestMatchers("/v3/**", "/swagger-ui/**")
             .permitAll() // swagger
             .anyRequest()

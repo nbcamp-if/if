@@ -30,7 +30,7 @@ public class UserRepository {
     return userJpaRepository.existsByRole(userRole);
   }
 
-  public User findByEmail(String email) {
-    return userJpaRepository.findByEmail(email);
+  public Optional<User> findByEmail(String email) {
+    return userJpaRepository.findByEmail(email).map(UserEntity::toModel);
   }
 }
