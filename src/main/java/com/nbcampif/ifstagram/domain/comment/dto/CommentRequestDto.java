@@ -1,4 +1,4 @@
-package com.nbcampif.ifstagram.dto;
+package com.nbcampif.ifstagram.domain.comment.dto;
 
 
 import lombok.Getter;

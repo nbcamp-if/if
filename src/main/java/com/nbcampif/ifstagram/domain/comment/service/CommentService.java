@@ -1,18 +1,17 @@
-package com.nbcampif.ifstagram.service;
+package com.nbcampif.ifstagram.domain.comment.service;
 
 
-import com.nbcampif.ifstagram.CommonResponse;
-import com.nbcampif.ifstagram.dto.CommentRequestDto;
-import com.nbcampif.ifstagram.dto.CommentResponseDto;
-import com.nbcampif.ifstagram.entity.Comment;
-import com.nbcampif.ifstagram.repository.CommentRepository;
+import com.nbcampif.ifstagram.global.dto.CommonResponse;
+import com.nbcampif.ifstagram.domain.comment.dto.CommentRequestDto;
+import com.nbcampif.ifstagram.domain.comment.dto.CommentResponseDto;
+import com.nbcampif.ifstagram.domain.comment.entity.Comment;
+import com.nbcampif.ifstagram.domain.comment.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +52,7 @@ public class CommentService {
                         .build());
     }
 
+    // 이 메소드는 postId에 해당하는 모든 댓글과 대댓글을 조회합니다.
     public ResponseEntity<CommonResponse<List<CommentResponseDto>>> getComment(Long postId) {
         List<CommentResponseDto> response = getCommentAndReplyList(postId);
         return ResponseEntity.ok()

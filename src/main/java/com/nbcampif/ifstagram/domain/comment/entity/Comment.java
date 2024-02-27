@@ -1,7 +1,8 @@
-package com.nbcampif.ifstagram.entity;
+package com.nbcampif.ifstagram.domain.comment.entity;
 
 
-import com.nbcampif.ifstagram.dto.CommentRequestDto;
+import com.nbcampif.ifstagram.global.entity.Timestamped;
+import com.nbcampif.ifstagram.domain.comment.dto.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,9 +35,6 @@ public class Comment extends Timestamped {
     private Long parentCommentId;
 
     @Column
-    private String deletedAt;
-
-    @Column
     private Boolean isDeleted = false;
 
 //    @Column
@@ -50,6 +48,6 @@ public class Comment extends Timestamped {
 
     public void Delete() {
         this.isDeleted = true;
-        this.deletedAt = String.valueOf(LocalDateTime.now());
+        super.deletedAt = LocalDateTime.now();
     }
 }

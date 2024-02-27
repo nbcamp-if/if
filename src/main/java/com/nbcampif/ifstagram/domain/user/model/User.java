@@ -51,5 +51,4 @@ public class User implements OAuth2User {
   public String getName() {
     return this.nickname;
   }
-
 }

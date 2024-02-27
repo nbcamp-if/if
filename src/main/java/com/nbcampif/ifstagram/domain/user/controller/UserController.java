@@ -1,7 +1,7 @@
-package com.nbcampif.ifstagram.controller;
+package com.nbcampif.ifstagram.domain.user.controller;
 
-import com.nbcampif.ifstagram.CommonResponse;
-import com.nbcampif.ifstagram.service.UserService;
+import com.nbcampif.ifstagram.global.dto.CommonResponse;
+import com.nbcampif.ifstagram.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
