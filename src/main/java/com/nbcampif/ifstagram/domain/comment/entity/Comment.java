@@ -1,6 +1,9 @@
 package com.nbcampif.ifstagram.domain.comment.entity;
 
 
+
+import com.nbcampif.ifstagram.domain.user.model.User;
+import com.nbcampif.ifstagram.global.entity.Timestamped;
 import com.nbcampif.ifstagram.domain.comment.dto.CommentRequestDto;
 import com.nbcampif.ifstagram.global.entity.Timestamped;
 import jakarta.persistence.Column;
@@ -41,14 +44,12 @@ public class Comment extends Timestamped {
   @Column
   private Boolean isDeleted = false;
 
-//    @Column
-//    private User user;
 
-  public Comment(CommentRequestDto requestDto) {
-    this.content = requestDto.getContent();
-    //temporary
-
+    public Comment(CommentRequestDto requestDto, User user) {
+        this.content = requestDto.getContent();
+        this.userId = user.getUserId();
   }
+
 
   public void Delete() {
     this.isDeleted = true;
