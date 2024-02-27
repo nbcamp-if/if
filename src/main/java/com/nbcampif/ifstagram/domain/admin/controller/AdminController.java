@@ -106,4 +106,15 @@ public class AdminController {
         .build()
     );
   }
+
+  @GetMapping("/posts/deleted")
+  public ResponseEntity<CommonResponse<List<PostResponseDto>>> getDeletedPost() {
+    List<PostResponseDto> responseList = adminService.getDeletedPost();
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+      CommonResponse.<List<PostResponseDto>>builder()
+        .message("삭제된 게시글 조회")
+        .data(responseList)
+        .build()
+    );
+  }
 }

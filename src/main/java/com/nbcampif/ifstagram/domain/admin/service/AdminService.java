@@ -99,4 +99,18 @@ public class AdminService {
     );
     post.delete();
   }
+
+  public List<PostResponseDto> getDeletedPost() {
+    return postRepository.findAllByDeletedAtIsNotNullOrderByDeletedAtDesc()
+      .stream().map(e -> {
+        String imageUrl;
+        try {
+          imageUrl = postImageService.getImage(e.getId());
+        } catch (MalformedURLException ex) {
+          throw new RuntimeException(ex);
+        }
+        return new PostResponseDto(e, imageUrl);
+      })
+      .toList();
+  }
 }
