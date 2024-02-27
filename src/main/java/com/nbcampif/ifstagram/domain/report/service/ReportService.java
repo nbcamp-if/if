@@ -28,7 +28,6 @@ public class ReportService {
     @Transactional
     public ResponseEntity<CommonResponse<?>> reportUser(Long reportedUserId, User user, ReportRequestDto requestDto) {
         User reportedUser = findUser(reportedUserId);
-        System.out.println(reportedUserId);
         userRepository.updateReportedCount(reportedUser);
         reportRepository.save(new Report(reportedUserId, user.getUserId(),requestDto.getContent()));
         String reportResult = String.format("%s이 %s를 신고하셨습니다. 사유 : %s", user.getName(), reportedUser.getName(),requestDto.getContent());
@@ -42,7 +41,7 @@ public class ReportService {
     }
 
     private User findUser(Long id){
-        return userRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("신고할 사용자가 존재하지 않습니다."));
+        return userRepository.findUser(id).orElseThrow(()-> new IllegalArgumentException("신고할 사용자가 존재하지 않습니다."));
     }
 
 }

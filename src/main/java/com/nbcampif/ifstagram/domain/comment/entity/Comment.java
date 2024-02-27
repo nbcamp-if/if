@@ -22,7 +22,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "comment")
+@Table(name = "comments")
 public class Comment extends Timestamped {
 
   @Id

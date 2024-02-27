@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "report")
+@Table(name = "reports")
 public class Report extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

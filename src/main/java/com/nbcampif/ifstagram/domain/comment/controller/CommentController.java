@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api/v1/comments/post")
 public class CommentController {
 
-
+    private CommentService commentService;
     @Operation(summary = "댓글 생성", description = "댓글 생성")
     @PostMapping("/{postId}")
     public ResponseEntity<CommonResponse<List<CommentResponseDto>>> createComment(
