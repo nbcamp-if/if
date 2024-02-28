@@ -1,6 +1,5 @@
 package com.nbcampif.ifstagram.domain.user.service;
 
-import com.nbcampif.ifstagram.domain.admin.dto.UserForceUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.Follow;
 import com.nbcampif.ifstagram.domain.user.model.User;
@@ -60,7 +59,7 @@ public class UserService {
   }
 
   public User updateUser(UserUpdateRequestDto requestDto, User user) {
-    User savedUser = userRepository.findUserOrElseThrow(user.getUserId());
+    User savedUser = userRepository.findByEmailOrElseThrow(user.getEmail());
 
     if (!isPasswordMatching(requestDto.getPassword(), requestDto.getConfirmPassword())) {
       throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
@@ -74,12 +73,12 @@ public class UserService {
   }
 
   private boolean isPasswordMatching(String password, String confirmPassword) {
-    return StringUtils.isEmpty(password) || password.equals(confirmPassword);
+    return StringUtils.hasText(password) || password.equals(confirmPassword);
   }
 
   private void validateRecentPasswords(String newPassword, Long userId) {
     List<RecentPassword> recentPasswords = recentPasswordRepository
-      .findTop3RecentPasswordsByUserIdOrderByCreatedAtDesc(userId);
+        .findTop3RecentPasswordsByUserIdOrderByCreatedAtDesc(userId);
 
     for (RecentPassword recentPassword : recentPasswords) {
       if (passwordEncoder.matches(newPassword, recentPassword.getPassword())) {
@@ -89,7 +88,7 @@ public class UserService {
   }
 
   private void saveRecentPassword(String password, Long userId) {
-    if (!StringUtils.isEmpty(password)) {
+    if (!StringUtils.hasText(password)) {
       RecentPassword recentPassword = new RecentPassword(password, userId);
       recentPasswordRepository.save(recentPassword);
     }

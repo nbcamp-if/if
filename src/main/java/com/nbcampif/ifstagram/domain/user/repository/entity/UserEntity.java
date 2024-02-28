@@ -54,15 +54,7 @@ public class UserEntity extends Timestamped {
   private UserRole role;
 
   public static UserEntity fromModel(User user) {
-    return new UserEntity(
-        user.getEmail(),
-        user.getNickname(),
-        user.getPassword(),
-        user.getProfileImage(),
-        user.getIntroduction(),
-        user.getReportedCount(),
-        user.getRole()
-    );
+    return new UserEntity(user.getEmail(), user.getNickname(), user.getPassword(), user.getProfileImage(), user.getIntroduction(), user.getReportedCount(), user.getRole());
   }
 
   private UserEntity(
@@ -84,14 +76,16 @@ public class UserEntity extends Timestamped {
   }
 
   public User toModel() {
-    return new User(
-        this.userId,
-        this.email,
-        this.nickname,
-        this.password,
-        this.profileImage,
-        this.role
-    );
+    return User.builder()
+        .userId(userId)
+        .email(email)
+        .nickname(nickname)
+        .password(password)
+        .profileImage(profileImage)
+        .introduction(introduction)
+        .reportedCount(reportedCount)
+        .role(role)
+        .build();
   }
 
   public void update(UserUpdateRequestDto requestDto) {
@@ -102,18 +96,17 @@ public class UserEntity extends Timestamped {
     Optional.ofNullable(requestDto.getIntroduction())
         .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
     Optional.ofNullable(requestDto.getPassword())
-      .ifPresent(requestPassword -> this.password = requestPassword);
+        .ifPresent(requestPassword -> this.password = requestPassword);
   }
 
   public void update(UserForceUpdateRequestDto requestDto) {
     Optional.ofNullable(requestDto.getNickname())
-      .ifPresent(requestNickname -> this.nickname = requestNickname);
+        .ifPresent(requestNickname -> this.nickname = requestNickname);
     Optional.ofNullable(requestDto.getProfileImage())
-      .ifPresent(requestProfileImage -> this.profileImage = requestProfileImage);
+        .ifPresent(requestProfileImage -> this.profileImage = requestProfileImage);
     Optional.ofNullable(requestDto.getIntroduction())
-      .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
-    Optional.ofNullable(requestDto.getRole())
-      .ifPresent(requestRole -> this.role = requestRole);
+        .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
+    Optional.ofNullable(requestDto.getRole()).ifPresent(requestRole -> this.role = requestRole);
   }
 
   public void updateReportedCount() {

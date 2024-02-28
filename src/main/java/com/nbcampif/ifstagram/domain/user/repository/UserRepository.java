@@ -44,9 +44,9 @@ public class UserRepository {
   }
 
   public User updateUser(UserUpdateRequestDto requestDto, User savedUser) {
-    UserEntity userEntity = userJpaRepository.findById(savedUser.getUserId()).get();
-    userEntity.update(requestDto);
-    return userEntity.toModel();
+    Optional<UserEntity> userEntity = userJpaRepository.findByEmail(savedUser.getEmail());
+    userEntity.get().update(requestDto);
+    return userJpaRepository.save(userEntity.get()).toModel();
   }
 
   public User updateUser(UserForceUpdateRequestDto requestDto, User savedUser) {
