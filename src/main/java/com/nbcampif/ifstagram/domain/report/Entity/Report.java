@@ -24,14 +24,14 @@ public class Report extends Timestamped {
     private String content;
 
     @Column
-    private Long from_user_id;
+    private Long fromUserId;
 
     @Column
-    private Long to_user_id;
+    private Long toUserId;
 
-    public Report(Long to_user_id, Long from_user_id, String result){
-        this.to_user_id = to_user_id;
-        this.from_user_id = from_user_id;
+    public Report(Long toUserId, Long fromUserId, String result){
+        this.toUserId = toUserId;
+        this.fromUserId = fromUserId;
         this.content = result;
     }
 

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
-  List<Report> findAllByTo_user_id(Long reportId);
+  List<Report> findAllByToUserId(Long reportId);
 }
