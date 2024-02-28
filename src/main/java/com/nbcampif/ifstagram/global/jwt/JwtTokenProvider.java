@@ -42,7 +42,6 @@ import org.springframework.util.StringUtils;
 public class JwtTokenProvider {
 
   private static final String AUTHORIZATION_ACCESS_TOKEN_HEADER_KEY = "Authorization";
-  private static final String AUTHORIZATION_REFRESH_TOKEN_HEADER_KEY = "RefreshToken";
   private static final String AUTHORIZATION_KEY = "Auth";
   private static final String BEARER_PREFIX = "Bearer ";
   private static final Integer BEARER_PREFIX_LENGTH = 7;
@@ -100,10 +99,6 @@ public class JwtTokenProvider {
     }
 
     return generateAccessToken(user.getUserId(), user.getRole().getAuthority());
-  }
-
-  private String getRefreshTokenFromRequest(HttpServletRequest request) {
-    return getTokenFromRequest(request, AUTHORIZATION_REFRESH_TOKEN_HEADER_KEY);
   }
 
   private String generateToken(
@@ -165,10 +160,6 @@ public class JwtTokenProvider {
 
   public void addAccessTokenToCookie(final String accessToken, final HttpServletResponse response) {
     addTokenToCookie(accessToken, AUTHORIZATION_ACCESS_TOKEN_HEADER_KEY, response);
-  }
-
-  public void addRefreshTokenToCookie(final String token, final HttpServletResponse response) {
-    addTokenToCookie(token, AUTHORIZATION_REFRESH_TOKEN_HEADER_KEY, response);
   }
 
   private void addTokenToCookie(
