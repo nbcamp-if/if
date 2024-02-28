@@ -19,4 +19,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   void downCount(@Param("postId") Long postId);
 
   List<Post> findAllByDeletedAtIsNotNullOrderByDeletedAtDesc();
+
+  List<Post> findAllByUserIdIn(List<Long> userList);
 }

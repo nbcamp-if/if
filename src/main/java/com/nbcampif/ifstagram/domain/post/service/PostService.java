@@ -6,6 +6,7 @@ import com.nbcampif.ifstagram.domain.post.dto.PostResponseDto;
 import com.nbcampif.ifstagram.domain.post.entity.Post;
 import com.nbcampif.ifstagram.domain.post.repository.PostRepository;
 import com.nbcampif.ifstagram.domain.user.model.User;
+import com.nbcampif.ifstagram.domain.user.repository.FollowRepository;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import com.nbcampif.ifstagram.global.response.CommonResponse;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class PostService {
   private final PostRepository postRepository;
   private final UserRepository userRepository;
   private final PostImageService postImageService;
+  private final FollowRepository followRepository;
 
   @Transactional
   public void createPost(
@@ -86,5 +89,20 @@ public class PostService {
         -> new IllegalCallerException("일치하는 게시글이 없습니다."));
 
     // todo: 사진을 삭제해도 url이 남아 있고 db를 삭제해도 사진이 남아 있음
+  }
+
+  public List<PostResponseDto> followPost(User user) {
+    List<Long> userList = followRepository.findToUserIdByFromUserId(user.getUserId());
+    List<Post> posts = postRepository.findAllByUserIdIn(userList);
+
+    return posts.stream()
+      .map(post -> {
+        try {
+          return new PostResponseDto(post, postImageService.getImage(post.getId()));
+        } catch (MalformedURLException e) {
+          throw new RuntimeException(e);
+        }
+      })
+      .collect(Collectors.toList());
   }
 }
