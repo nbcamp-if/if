@@ -79,10 +79,10 @@ public class AdminService {
   }
 
   public List<ReportReponseDto> searchReport(Long reportId) {
-    List<Report> reportList = reportRepository.findAllByTo_user_id(reportId);
+    List<Report> reportList = reportRepository.findAllByToUserId(reportId);
     List<ReportReponseDto> responseDtoList = reportList.stream()
       .map(report -> new ReportReponseDto(
-        report.getContent(), report.getFrom_user_id(), report.getTo_user_id())
+        report.getContent(), report.getFromUserId(), report.getToUserId())
       )
       .collect(Collectors.toList());
 
