@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +50,8 @@ public class AdminService {
   public void createAdminAccount() {
     boolean existsAdmin = userRepository.existsByRole(UserRole.ADMIN);
     if (!existsAdmin) {
-      User admin = new User(1L, adminEmail, "admin", null, UserRole.ADMIN);
+      User admin = new User(1L, adminEmail, "admin", UUID.randomUUID()
+          .toString(), null, UserRole.ADMIN);
       userRepository.createUser(admin);
     }
   }
@@ -57,22 +59,22 @@ public class AdminService {
   public void login(LoginRequestDto requestDto, HttpServletResponse response) {
     String password = requestDto.getPassword();
     User user = userRepository.findByEmail(requestDto.getEmail())
-      .orElseThrow(() -> new NotFoundUserException("해당 유저는 존재하지 않습니다."));
+        .orElseThrow(() -> new NotFoundUserException("해당 유저는 존재하지 않습니다."));
     if (!verifyPassword.equals(password) || !user.getRole().equals(UserRole.ADMIN)) {
       throw new PermissionNotException("허용되지 않은 권한입니다.");
     }
 
     String accessToken = jwtTokenProvider.generateAccessToken(user.getUserId(),
-      user.getRole().getAuthority());
+        user.getRole().getAuthority());
     String refreshToken = jwtTokenProvider.generateRefreshToken(user.getUserId(),
-      user.getRole().getAuthority());
+        user.getRole().getAuthority());
 
     jwtTokenProvider.addAccessTokenToCookie(accessToken, response);
   }
 
   public UserResponseDto searchUser(Long userId) {
     User user = userRepository.findUser(userId)
-      .orElseThrow(() -> new NotFoundUserException("해당 유저는 존재하지 않습니다."));
+        .orElseThrow(() -> new NotFoundUserException("해당 유저는 존재하지 않습니다."));
 
     UserResponseDto responseDto = UserResponseDto.of(user);
     return responseDto;
@@ -81,10 +83,10 @@ public class AdminService {
   public List<ReportReponseDto> searchReport(Long reportId) {
     List<Report> reportList = reportRepository.findAllByToUserId(reportId);
     List<ReportReponseDto> responseDtoList = reportList.stream()
-      .map(report -> new ReportReponseDto(
-        report.getContent(), report.getFromUserId(), report.getToUserId())
-      )
-      .collect(Collectors.toList());
+        .map(report -> new ReportReponseDto(
+            report.getContent(), report.getFromUserId(), report.getToUserId())
+        )
+        .collect(Collectors.toList());
 
     return responseDtoList;
   }
@@ -92,17 +94,17 @@ public class AdminService {
   @Transactional
   public void updateUser(Long userId, UserUpdateRequestDto requestDto) {
     User user = userRepository.findUser(userId)
-      .orElseThrow(() -> new NotFoundUserException("해당 유저는 존재하지 않습니다."));
+        .orElseThrow(() -> new NotFoundUserException("해당 유저는 존재하지 않습니다."));
 
     userRepository.updateUser(requestDto, user);
   }
 
   @Transactional
   public void updatePost(Long postId, PostRequestDto requestDto, MultipartFile image)
-    throws IOException {
+      throws IOException {
 
     Post post = postRepository.findById(postId)
-      .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
     postImageService.updateImage(post, image);
     post.updatePost(requestDto);
   }
@@ -110,22 +112,23 @@ public class AdminService {
   @Transactional
   public void deletePost(Long postId) {
     Post post = postRepository.findById(postId)
-      .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
-    );
+        .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
+        );
     post.delete();
   }
 
   public List<PostResponseDto> getDeletedPost() {
     return postRepository.findAllByDeletedAtIsNotNullOrderByDeletedAtDesc()
-      .stream().map(e -> {
-        String imageUrl;
-        try {
-          imageUrl = postImageService.getImage(e.getId());
-        } catch (MalformedURLException ex) {
-          throw new RuntimeException(ex);
-        }
-        return new PostResponseDto(e, imageUrl);
-      })
-      .toList();
+        .stream().map(e -> {
+          String imageUrl;
+          try {
+            imageUrl = postImageService.getImage(e.getId());
+          } catch (MalformedURLException ex) {
+            throw new RuntimeException(ex);
+          }
+          return new PostResponseDto(e, imageUrl);
+        })
+        .toList();
   }
+
 }
