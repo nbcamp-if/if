@@ -24,7 +24,7 @@ public class PostImage {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long image_id;
+  private Long id;
   @Column(name = "file_name")
   private String fileName;
   @Column(name = "save_file_name")
