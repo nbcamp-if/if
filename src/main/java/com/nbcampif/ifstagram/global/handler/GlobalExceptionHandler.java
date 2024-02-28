@@ -31,13 +31,13 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(NotFoundUserException.class)
   public ResponseEntity<ErrorResponse> handleNotFountUserException(NotFoundUserException e) {
     ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
-    return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(errorResponse);
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
   }
 
   @ExceptionHandler(PermissionNotException.class)
   public ResponseEntity<ErrorResponse> handlePermissionNotException(PermissionNotException e) {
     ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
-    return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(errorResponse);
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
   }
 
 }

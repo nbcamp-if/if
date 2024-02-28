@@ -21,7 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * FAKE JwtAuthenticationFilter for testing
  */
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationTestFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(
