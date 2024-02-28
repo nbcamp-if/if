@@ -50,10 +50,10 @@ public class WebSecurityConfig {
         .anyRequest()
         .authenticated());
     // config oauth2 filter
-    http.oauth2Login(oauth2 -> oauth2.authorizationEndpoint(authorization -> authorization.baseUri("/api/v1/auth/login"))
-        .redirectionEndpoint(redirection -> redirection.baseUri("/api/v1/auth/login/oauth2/callback/*"))
-        .userInfoEndpoint(userInfo -> userInfo.userService(authService))
-        .successHandler(oAuth2SuccessHandler));
+//    http.oauth2Login(oauth2 -> oauth2.authorizationEndpoint(authorization -> authorization.baseUri("/api/v1/auth/login"))
+//        .redirectionEndpoint(redirection -> redirection.baseUri("/api/v1/auth/login/oauth2/callback/*"))
+//        .userInfoEndpoint(userInfo -> userInfo.userService(authService))
+//        .successHandler(oAuth2SuccessHandler));
     // config logout
     http.logout(logout -> logout.logoutUrl("/api/v1/auth/logout")
         .addLogoutHandler(customLogoutHandler)
