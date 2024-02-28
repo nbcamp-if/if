@@ -37,7 +37,7 @@ public class PostController {
   @PostMapping
   public ResponseEntity<CommonResponse<Void>> createPost(
       @RequestPart(value = "data") PostRequestDto requestDto,
-      @RequestPart(value = "file") MultipartFile image,
+      @RequestPart(value = "file", required = false) MultipartFile image,
       @AuthenticationPrincipal User user) throws Exception {
 
     postService.createPost(requestDto, image, user);
@@ -71,7 +71,7 @@ public class PostController {
   public ResponseEntity<CommonResponse<Void>> updatePost(
       @PathVariable Long postId,
       @RequestPart(value = "data") PostRequestDto requestDto,
-      @RequestPart(value = "file") MultipartFile image
+      @RequestPart(value = "file", required = false) MultipartFile image
     ) throws IOException {
     postService.updatePost(postId, requestDto, image);
     return ResponseEntity.status(HttpStatus.OK.value()).body(
