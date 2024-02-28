@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j(topic = "AUTH_SERVICE")
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class AuthService extends DefaultOAuth2UserService {
 
   private static final String DEFAULT_PROFILE_IMAGE = "https://k.kakaocdn.net/dn/1G9kp/btsAot8liOn/8CWudi3uy07rvFNUkk3ER0/img_640x640.jpg";
@@ -45,7 +46,6 @@ public class AuthService extends DefaultOAuth2UserService {
   }
 
   @Override
-  @Transactional
   public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
     OAuth2User oAuth2User = super.loadUser(userRequest);
 
