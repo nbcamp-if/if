@@ -8,10 +8,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -19,7 +20,6 @@ import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "users")
 @SQLRestriction(value = "deleted_at is NULL")
@@ -27,6 +27,7 @@ import org.hibernate.annotations.SQLRestriction;
 public class UserEntity extends Timestamped {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long userId;
 
   @Column(unique = true)
@@ -34,6 +35,9 @@ public class UserEntity extends Timestamped {
 
   @Column(nullable = false)
   private String nickname;
+
+  @Column(nullable = false)
+  private String password;
 
   @Column
   private String profileImage;
@@ -50,9 +54,9 @@ public class UserEntity extends Timestamped {
 
   public static UserEntity fromModel(User user) {
     return new UserEntity(
-        user.getUserId(),
         user.getEmail(),
         user.getNickname(),
+        user.getPassword(),
         user.getProfileImage(),
         user.getIntroduction(),
         user.getReportedCount(),
@@ -60,8 +64,33 @@ public class UserEntity extends Timestamped {
     );
   }
 
+  private UserEntity(
+      String email,
+      String nickname,
+      String password,
+      String profileImage,
+      String introduction,
+      Long reportedCount,
+      UserRole role
+  ) {
+    this.email = email;
+    this.nickname = nickname;
+    this.password = password;
+    this.profileImage = profileImage;
+    this.introduction = introduction;
+    this.reportedCount = reportedCount;
+    this.role = role;
+  }
+
   public User toModel() {
-    return new User(userId, email, nickname, profileImage, introduction, reportedCount, role);
+    return new User(
+        this.userId,
+        this.email,
+        this.nickname,
+        this.password,
+        this.profileImage,
+        this.role
+    );
   }
 
   public void update(UserUpdateRequestDto requestDto) {
