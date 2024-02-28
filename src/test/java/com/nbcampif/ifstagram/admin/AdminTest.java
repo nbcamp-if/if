@@ -10,6 +10,7 @@ import com.nbcampif.ifstagram.domain.post.repository.PostRepository;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
+import com.nbcampif.ifstagram.domain.user.repository.entity.UserEntity;
 import com.nbcampif.ifstagram.global.response.CommonResponse;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,9 +56,6 @@ public class AdminTest {
   @BeforeEach
   @Test
   void admin_login_success() {
-    User admin = new User(1L, adminEmail, "admin", UUID.randomUUID()
-        .toString(), null, UserRole.ADMIN);
-    userRepository.createUser(admin);
     LoginRequestDto requestDto = new LoginRequestDto(adminEmail, adminPassword);
     String baseUrl = "http://localhost:" + port + "/api/v1/admin/login";
 
@@ -72,10 +70,10 @@ public class AdminTest {
   @Test
   @DisplayName("관리자 로그인 실패 - 계정 권한")
   void admin_login_fail1() {
-    User admin = new User(1L, adminEmail, "admin", UUID.randomUUID()
+    User admin = new User("admin@test.com", "admin", UUID.randomUUID()
         .toString(), null, UserRole.USER);
     userRepository.createUser(admin);
-    LoginRequestDto requestDto = new LoginRequestDto(adminEmail, adminPassword);
+    LoginRequestDto requestDto = new LoginRequestDto(admin.getEmail(), adminPassword);
     String baseUrl = "http://localhost:" + port + "/api/v1/admin/login";
 
     ResponseEntity<CommonResponse> responseEntity = restTemplate.postForEntity(baseUrl, requestDto, CommonResponse.class);
@@ -87,11 +85,8 @@ public class AdminTest {
   @Test
   @DisplayName("관리자 로그인 실패 - 비밀번호 실패")
   void admin_login_fail2() {
-    User admin = new User(1L, adminEmail, "admin", UUID.randomUUID()
-        .toString(), null, UserRole.ADMIN);
-    userRepository.createUser(admin);
     LoginRequestDto requestDto = new LoginRequestDto(adminEmail, "notpassword");
-    String baseUrl = "http://localhost:" + port + "/api/v1/admin/user/{userId}";
+    String baseUrl = "http://localhost:" + port + "/api/v1/admin/login";
 
     ResponseEntity<CommonResponse> responseEntity = restTemplate.postForEntity(baseUrl, requestDto, CommonResponse.class);
 
@@ -101,15 +96,18 @@ public class AdminTest {
 
   @Test
   void admin_user_search() {
-    User user = new User(100L, "user@test.com", "user1", UUID.randomUUID()
+    User user = new User("user@test.com", "user1", UUID.randomUUID()
         .toString(), null, UserRole.USER);
     userRepository.createUser(user);
-    String baseUrl = "http://localhost:" + port + "/api/v1/admin/user/" + user.getUserId();
+    User testUser = userRepository.findByEmailOrElseThrow(user.getEmail());
+    String baseUrl = "http://localhost:" + port + "/api/v1/admin/user/" + testUser.getUserId();
 
     HttpHeaders headers = new HttpHeaders();
     headers.set(HttpHeaders.COOKIE, token);
 
-    ResponseEntity<CommonResponse> responseEntity = restTemplate.exchange(baseUrl, HttpMethod.GET, new HttpEntity<>(null, headers), CommonResponse.class);
+    ResponseEntity<CommonResponse> responseEntity = restTemplate.exchange(
+      baseUrl, HttpMethod.GET, new HttpEntity<>(null, headers), CommonResponse.class
+    );
 
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     assertEquals("조회 성공", responseEntity.getBody().getMessage());
@@ -117,15 +115,18 @@ public class AdminTest {
 
   @Test
   void admin_report_search() {
-    User user = new User(100L, "user@test.com", "user1", UUID.randomUUID()
+    User user = new User("user@test.com", "user1", UUID.randomUUID()
         .toString(), null, UserRole.USER);
     userRepository.createUser(user);
-    String baseUrl = "http://localhost:" + port + "/api/v1/admin/report/" + user.getUserId();
+    User testUser = userRepository.findByEmailOrElseThrow(user.getEmail());
+    String baseUrl = "http://localhost:" + port + "/api/v1/admin/report/" + testUser.getUserId();
 
     HttpHeaders headers = new HttpHeaders();
     headers.set(HttpHeaders.COOKIE, token);
 
-    ResponseEntity<CommonResponse> responseEntity = restTemplate.exchange(baseUrl, HttpMethod.GET, new HttpEntity<>(null, headers), CommonResponse.class);
+    ResponseEntity<CommonResponse> responseEntity = restTemplate.exchange(
+      baseUrl, HttpMethod.GET, new HttpEntity<>(null, headers), CommonResponse.class
+    );
 
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     assertEquals("신고 내역 조회 성공", responseEntity.getBody().getMessage());
@@ -133,16 +134,17 @@ public class AdminTest {
 
   @Test
   void admin_user_update() {
-    User user = new User(100L, "user@test.com", "user1", UUID.randomUUID()
+    User user = new User("user@test.com", "user1", UUID.randomUUID()
         .toString(), null, UserRole.USER);
     userRepository.createUser(user);
+    User testUser = userRepository.findByEmailOrElseThrow(user.getEmail());
 
     UserForceUpdateRequestDto requestDto = new UserForceUpdateRequestDto("test", "user2", null, UserRole.USER);
 
     HttpHeaders headers = new HttpHeaders();
     headers.set(HttpHeaders.COOKIE, token);
 
-    String baseUrl = "http://localhost:" + port + "/api/v1/admin/user/" + user.getUserId();
+    String baseUrl = "http://localhost:" + port + "/api/v1/admin/user/" + testUser.getUserId();
 
     ResponseEntity<CommonResponse> responseEntity = restTemplate.exchange(baseUrl, HttpMethod.PUT, new HttpEntity<>(requestDto, headers), CommonResponse.class);
 

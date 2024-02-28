@@ -6,6 +6,7 @@ import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.RecentPasswordRepository;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import com.nbcampif.ifstagram.domain.user.repository.entity.RecentPassword;
+import com.nbcampif.ifstagram.domain.user.repository.entity.UserEntity;
 import com.nbcampif.ifstagram.global.jwt.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
