@@ -11,6 +11,7 @@ import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.Follow;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.FollowRepository;
+import com.nbcampif.ifstagram.domain.user.repository.RecentPasswordRepository;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import com.nbcampif.ifstagram.global.common.TestValues;
 import java.util.Optional;
@@ -29,6 +30,9 @@ class UserServiceTest extends TestValues {
   private UserRepository userRepository;
   @Mock
   private FollowRepository followRepository;
+
+  @Mock
+  private RecentPasswordRepository recentPasswordRepository;
 
   @InjectMocks
   private UserService userService;
