@@ -1,5 +1,6 @@
 package com.nbcampif.ifstagram.domain.user.repository;
 
+import com.nbcampif.ifstagram.domain.admin.dto.UserForceUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
@@ -43,6 +44,12 @@ public class UserRepository {
   }
 
   public User updateUser(UserUpdateRequestDto requestDto, User savedUser) {
+    UserEntity userEntity = userJpaRepository.findById(savedUser.getUserId()).get();
+    userEntity.update(requestDto);
+    return userEntity.toModel();
+  }
+
+  public User updateUser(UserForceUpdateRequestDto requestDto, User savedUser) {
     UserEntity userEntity = userJpaRepository.findById(savedUser.getUserId()).get();
     userEntity.update(requestDto);
     return userEntity.toModel();

@@ -3,7 +3,9 @@ package com.nbcampif.ifstagram.domain.auth.service;
 import com.nbcampif.ifstagram.domain.admin.dto.LoginRequestDto;
 import com.nbcampif.ifstagram.domain.auth.dto.SignupRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
+import com.nbcampif.ifstagram.domain.user.repository.RecentPasswordRepository;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
+import com.nbcampif.ifstagram.domain.user.repository.entity.RecentPassword;
 import com.nbcampif.ifstagram.global.jwt.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -27,15 +29,17 @@ public class AuthService extends DefaultOAuth2UserService {
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenProvider jwtTokenProvider;
   private final UserRepository userRepository;
+  private final RecentPasswordRepository recentPasswordRepository;
 
   public void signup(SignupRequestDto requestDto) {
     if (!requestDto.isConfirmPasswordCorrect()) {
       throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
     }
     String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
-    // TODO: 비밀번호 이력에 저장
 
     User newUser = new User(requestDto.getEmail(), requestDto.getNickname(), encodedPassword, DEFAULT_PROFILE_IMAGE);
+    RecentPassword recentPassword = new RecentPassword(requestDto.getPassword(), newUser.getUserId());
+    recentPasswordRepository.save(recentPassword);
     userRepository.createUser(newUser);
   }
 

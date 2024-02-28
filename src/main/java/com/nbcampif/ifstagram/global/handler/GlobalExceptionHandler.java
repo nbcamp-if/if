@@ -2,6 +2,7 @@ package com.nbcampif.ifstagram.global.handler;
 
 import com.nbcampif.ifstagram.global.exception.NotFoundUserException;
 import com.nbcampif.ifstagram.global.exception.PermissionNotException;
+import com.nbcampif.ifstagram.global.exception.RecentPasswordException;
 import com.nbcampif.ifstagram.global.response.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.concurrent.RejectedExecutionException;
@@ -41,6 +42,12 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ErrorResponse> handleEntityNotFountException(EntityNotFoundException e) {
     ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
     return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(errorResponse);
+  }
+
+  @ExceptionHandler(RecentPasswordException.class)
+  public ResponseEntity<ErrorResponse> handleRecentPasswordException(RecentPasswordException e) {
+    ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
   }
 
 }

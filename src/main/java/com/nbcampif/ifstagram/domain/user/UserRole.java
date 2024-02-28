@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum UserRole {
   ADMIN("ROLE_ADMIN"),
   USER("ROLE_USER"),
+  DISABLED("ROLE_DISABLED")
   ;
   private final String authority;
 }

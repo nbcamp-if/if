@@ -124,7 +124,7 @@ class UserServiceTest extends TestValues {
       assertEquals(TEST_UPDATE_INTRODUCTION, updatedUser.getIntroduction());
       assertEquals(TEST_UPDATE_NICKNAME, updatedUser.getNickname());
       assertEquals(TEST_UPDATE_PROFILEIMAGE, updatedUser.getProfileImage());
-      then(userRepository).should(times(1)).updateUser(any(), any());
+      then(userRepository).should(times(1)).updateUser((UserUpdateRequestDto) any(), any());
     }
 
   }

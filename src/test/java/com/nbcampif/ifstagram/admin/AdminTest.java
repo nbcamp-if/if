@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nbcampif.ifstagram.domain.admin.dto.LoginRequestDto;
+import com.nbcampif.ifstagram.domain.admin.dto.UserForceUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
 import com.nbcampif.ifstagram.domain.post.entity.Post;
 import com.nbcampif.ifstagram.domain.post.repository.PostRepository;
@@ -173,8 +174,8 @@ public class AdminTest {
     );
     userRepository.createUser(user);
 
-    UserUpdateRequestDto requestDto = new UserUpdateRequestDto(
-      "test", "user2", null
+    UserForceUpdateRequestDto requestDto = new UserForceUpdateRequestDto(
+      "test", "user2", null, UserRole.USER
     );
 
     HttpHeaders headers = new HttpHeaders();
