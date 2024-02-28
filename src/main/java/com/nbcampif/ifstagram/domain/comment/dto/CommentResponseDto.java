@@ -20,7 +20,7 @@ public class CommentResponseDto {
     private String content;
     private List<CommentResponseDto> replyList = new ArrayList<>();
 
-    public CommentResponseDto(Comment comment){
+    public CommentResponseDto(Comment comment) {
         this.postId = comment.getPostId();
         this.commentId = comment.getId();
         this.username = comment.getUserId();
@@ -28,5 +28,5 @@ public class CommentResponseDto {
         this.createDate = comment.getCreatedAt();
         this.modifiedDate = comment.getModifiedAt();
         this.deletedDate = comment.getDeletedAt();
-
+    }
 }

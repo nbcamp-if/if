@@ -1,5 +1,6 @@
 package com.nbcampif.ifstagram.domain.post.service;
 
+import com.nbcampif.ifstagram.domain.image.service.PostImageService;
 import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
 import com.nbcampif.ifstagram.domain.post.dto.PostResponseDto;
 import com.nbcampif.ifstagram.domain.post.entity.Post;
@@ -8,6 +9,7 @@ import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import com.nbcampif.ifstagram.global.response.CommonResponse;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,72 +29,56 @@ public class PostService {
 
   private final PostRepository postRepository;
   private final UserRepository userRepository;
+  private final PostImageService postImageService;
 
   @Transactional
   public void createPost(
-      PostRequestDto requestDto, MultipartFile image, User user) throws IOException {
-    String uuid = UUID.randomUUID().toString();
-    // 이미지 저장 시 이름이 겹칠 수 없기 때문에 UUID를 통해 랜덤 문자열 더해서 저장
-    User userInfo = userRepository.findUser(user.getUserId()).orElseThrow(()
-        -> new IllegalCallerException("존재하지 않는 회원입니다."));
-
-    // 이미지 로직
-    String fileName = image.getOriginalFilename(); // 내가 지정한 이미지명 등록
-    Path path = Paths.get(
-        System.getProperty("user.home"), "Desktop", "IFstagram"); // 이미지가 저장될 경로 지정
-    Path filePath = path.resolve(uuid + fileName); // 파일의 경로 지정
-    String postImage = filePath + "";
-
-    if (!Files.exists(path)) {
-      Files.createDirectories(path); // 디렉토리 생성
-    }
-
-    Files.copy(image.getInputStream(), filePath); // 파일 저장(파일입력스트림을 파일로 복사하여 로컬에 저장)
-
-    Post post = new Post(requestDto, postImage, userInfo.getUserId());
-
+      PostRequestDto requestDto, MultipartFile image, User user) throws Exception {
+    Post post = new Post(requestDto, user.getUserId());
     postRepository.save(post);
+
+    postImageService.createImage(image, post);
   }
 
   @Transactional(readOnly = true)
   public List<PostResponseDto> getPostList() {
-    List<PostResponseDto> responseDtos = new ArrayList<>();
-    List<Post> postList = postRepository.findAll();
-    for (Post p : postList) {
-      PostResponseDto responseDto = new PostResponseDto(p);
-      List<PostResponseDto> responseDtoList = postRepository.findAll()
-          .stream().map(PostResponseDto::new).toList();
-      responseDto.setPostList(responseDtoList);
-      responseDtos.add(responseDto);
-    }
-    return responseDtos;
+    return postRepository.findAll().stream().map(post -> {
+        String imageUrl;
+        try {
+          imageUrl = postImageService.getImage(post.getId());
+        } catch (MalformedURLException ex) {
+          throw new RuntimeException(ex);
+        }
+        return new PostResponseDto(post, imageUrl);
+      })
+      .toList();
   }
 
   @Transactional(readOnly = true)
-  public PostResponseDto getPost(Long postId) {
+  public PostResponseDto getPost(Long postId) throws MalformedURLException {
     Post post = findPost(postId);
     PostResponseDto responseDto = new PostResponseDto(
-        post.getTitle(),
-        post.getContent(),
-        post.getPostImg()
+      post,
+      postImageService.getImage(post.getId())
     );
     return responseDto;
   }
 
   @Transactional
-  public void updatePost(Long postId, PostRequestDto requestDto) {
+  public void updatePost(Long postId, PostRequestDto requestDto, MultipartFile image)
+    throws IOException {
 
     Post post = findPost(postId);
+    postImageService.updateImage(post, image);
 
     post.updatePost(requestDto);
-    // todo: 사진 수정 불가 찾아보기
   }
 
   @Transactional
   public void deletePost(Long postId) {
     Post post = findPost(postId);
 
-    postRepository.delete(post);
+    post.delete();
   }
 
   private Post findPost(Long postId) {

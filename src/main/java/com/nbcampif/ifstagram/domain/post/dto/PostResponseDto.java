@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class PostResponseDto {
 
   private final String title;
@@ -15,15 +14,9 @@ public class PostResponseDto {
   private final String postImg;
   private List<PostResponseDto> postList = new ArrayList<>();
 
-  public PostResponseDto(String title, String content, String postImg) {
-    this.title = title;
-    this.content = content;
-    this.postImg = postImg;
-  }
-
-  public PostResponseDto(Post post) {
+  public PostResponseDto(Post post, String postImg) {
     this.title = post.getTitle();
     this.content = post.getContent();
-    this.postImg = post.getPostImg();
+    this.postImg = postImg;
   }
 }

@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserUpdateRequestDto implements Serializable {
 
-  @Email
-  private String email;
   private String introduction;
   @NotBlank
   @Pattern(regexp = "^[가-힣a-zA-Z0-9]*$")

@@ -50,3 +50,6 @@ out/
 
 ### ADMIN ###
 /**/src/main/resources/admin.properties
+
+### IMAGE ###
+/**/src/main/resources/images

@@ -2,6 +2,7 @@ package com.nbcampif.ifstagram.domain.post.entity;
 
 import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
 import com.nbcampif.ifstagram.domain.repost.dto.RepostRequestDto;
+import com.nbcampif.ifstagram.global.entity.Timestamped;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,23 +13,24 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Getter
 @Table(name = "posts")
 @NoArgsConstructor
-public class Post {
+
+public class Post extends Timestamped {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long postId;
+  private Long id;
   @Column(nullable = false)
   private String title;
   @Lob
   @Column(nullable = false)
   private String content;
-  @Column(nullable = true)
-  private String postImg;
   @Column(nullable = false, columnDefinition = "BIGINT default 0")
   private Long likeCount;
   @Column(nullable = false, columnDefinition = "BIGINT default 0")
@@ -37,56 +39,44 @@ public class Post {
   private Long userId;
   @Column(nullable = true)
   private Long repostId;
-  @Column(nullable = false)
-  private LocalDateTime createdAt;
-  @Column(nullable = false)
-  private LocalDateTime modifiedAt;
 
-  private LocalDateTime deletedAt;
-
-  public Post(PostRequestDto requestDto, String image, Long userId) {
+  public Post(PostRequestDto requestDto, Long userId) {
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
-    this.postImg = image;
     this.likeCount = 0L;
     this.repostCount = 0L;
     this.userId = userId;
     this.repostId = 0L;
-    this.createdAt = LocalDateTime.now();
-    this.modifiedAt = LocalDateTime.now();
   }
 
   public Post(Post post, Long userId) {
     this.title = post.getTitle();
     this.content = post.getContent();
-    this.postImg = post.getPostImg();
     this.likeCount = 0L;
     this.repostCount = 0L;
     this.userId = userId;
-    this.repostId = post.getPostId();
-    this.createdAt = LocalDateTime.now();
-    this.modifiedAt = LocalDateTime.now();
+    this.repostId = post.getId();
   }
 
   public void updateRepost(RepostRequestDto requestDto, String postImage, Long postId) {
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
-    this.postImg = postImage;
     this.repostId = postId;
     this.likeCount = 0L;
     this.repostCount = 0L;
-    this.createdAt = LocalDateTime.now();
-    this.modifiedAt = LocalDateTime.now();
+  }
+
+  public void updateLike() {
+    this.likeCount++;
   }
 
   public void updatePost(PostRequestDto requestDto) {
     this.title = requestDto.getTitle();
     this.content = requestDto.getContent();
-    this.modifiedAt = LocalDateTime.now();
   }
 
-  public void updateLike() {
-    this.likeCount++;
+  public void delete() {
+    this.deletedAt = LocalDateTime.now();
   }
 
 //  public Post(PostRequestDto requestDto, userDetails userDetails) {

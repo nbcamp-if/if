@@ -35,10 +35,6 @@ public class CommentService {
                         .build());
     }
 
-
-  private final CommentRepository commentRepository;
-
-
     public ResponseEntity<CommonResponse<List<CommentResponseDto>>> createReplyComment(CommentRequestDto requestDto, Long postId, Long commentId, User user) {
 //        Post post = findPostById(postId);
         findCommentById(commentId);
