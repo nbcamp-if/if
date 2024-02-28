@@ -1,4 +1,4 @@
-package com.nbcampif.ifstagram.Integration;
+package com.nbcampif.ifstagram.integration;
 
 import static org.hamcrest.core.StringEndsWith.endsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,7 +42,6 @@ public class UserIntegrationTest extends TestValues {
 
     @Test
     void success() throws Exception {
-
       // given
       User user = TEST_USER1;
 
@@ -100,7 +99,7 @@ public class UserIntegrationTest extends TestValues {
 
           // then
           .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-          .andExpect(jsonPath("$.message").value(endsWith("신고되었습니다")))
+          .andExpect(jsonPath("$.message").value(endsWith("성공")))
           .andExpect(jsonPath("$.data.introduction").value(newIntroduction))
           .andExpect(jsonPath("$.data.nickname").value(newNickname))
           .andExpect(jsonPath("$.data.profileImage").value(newProfileImage));
