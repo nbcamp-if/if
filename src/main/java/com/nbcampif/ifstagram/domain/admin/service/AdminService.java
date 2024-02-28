@@ -1,6 +1,7 @@
 package com.nbcampif.ifstagram.domain.admin.service;
 
 import com.nbcampif.ifstagram.domain.admin.dto.LoginRequestDto;
+import com.nbcampif.ifstagram.domain.admin.dto.UserForceUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.image.service.PostImageService;
 import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
 import com.nbcampif.ifstagram.domain.post.dto.PostResponseDto;
@@ -92,7 +93,7 @@ public class AdminService {
   }
 
   @Transactional
-  public void updateUser(Long userId, UserUpdateRequestDto requestDto) {
+  public void updateUser(Long userId, UserForceUpdateRequestDto requestDto) {
     User user = userRepository.findUser(userId)
         .orElseThrow(() -> new NotFoundUserException("해당 유저는 존재하지 않습니다."));
 

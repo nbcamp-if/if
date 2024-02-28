@@ -1,5 +1,6 @@
 package com.nbcampif.ifstagram.domain.user.repository.entity;
 
+import com.nbcampif.ifstagram.domain.admin.dto.UserForceUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
@@ -100,6 +101,19 @@ public class UserEntity extends Timestamped {
         .ifPresent(requestProfileImage -> this.profileImage = requestProfileImage);
     Optional.ofNullable(requestDto.getIntroduction())
         .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
+    Optional.ofNullable(requestDto.getPassword())
+      .ifPresent(requestPassword -> this.password = requestPassword);
+  }
+
+  public void update(UserForceUpdateRequestDto requestDto) {
+    Optional.ofNullable(requestDto.getNickname())
+      .ifPresent(requestNickname -> this.nickname = requestNickname);
+    Optional.ofNullable(requestDto.getProfileImage())
+      .ifPresent(requestProfileImage -> this.profileImage = requestProfileImage);
+    Optional.ofNullable(requestDto.getIntroduction())
+      .ifPresent(requestIntroduction -> this.introduction = requestIntroduction);
+    Optional.ofNullable(requestDto.getRole())
+      .ifPresent(requestRole -> this.role = requestRole);
   }
 
   public void updateReportedCount() {

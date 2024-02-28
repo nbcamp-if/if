@@ -1,6 +1,7 @@
 package com.nbcampif.ifstagram.domain.admin.controller;
 
 import com.nbcampif.ifstagram.domain.admin.dto.LoginRequestDto;
+import com.nbcampif.ifstagram.domain.admin.dto.UserForceUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.admin.service.AdminService;
 import com.nbcampif.ifstagram.domain.post.dto.PostRequestDto;
 import com.nbcampif.ifstagram.domain.post.dto.PostResponseDto;
@@ -79,7 +80,7 @@ public class AdminController {
   @PutMapping("/user/{userId}")
   public ResponseEntity<CommonResponse<Void>> updateUser(
     @PathVariable Long userId,
-    @RequestBody UserUpdateRequestDto requestDto,
+    @RequestBody UserForceUpdateRequestDto requestDto,
     @AuthenticationPrincipal User admin
   ) {
     adminService.updateUser(userId, requestDto);
