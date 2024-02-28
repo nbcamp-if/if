@@ -10,7 +10,6 @@ import com.nbcampif.ifstagram.domain.post.repository.PostRepository;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
-import com.nbcampif.ifstagram.domain.user.repository.entity.UserEntity;
 import com.nbcampif.ifstagram.global.response.CommonResponse;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -96,7 +95,7 @@ public class AdminTest {
 
   @Test
   void admin_user_search() {
-    User user = new User("user@test.com", "user1", UUID.randomUUID()
+    User user = new User("user1@test.com", "user1", UUID.randomUUID()
         .toString(), null, UserRole.USER);
     userRepository.createUser(user);
     User testUser = userRepository.findByEmailOrElseThrow(user.getEmail());
@@ -115,7 +114,7 @@ public class AdminTest {
 
   @Test
   void admin_report_search() {
-    User user = new User("user@test.com", "user1", UUID.randomUUID()
+    User user = new User("user2@test.com", "user2", UUID.randomUUID()
         .toString(), null, UserRole.USER);
     userRepository.createUser(user);
     User testUser = userRepository.findByEmailOrElseThrow(user.getEmail());
@@ -134,7 +133,7 @@ public class AdminTest {
 
   @Test
   void admin_user_update() {
-    User user = new User("user@test.com", "user1", UUID.randomUUID()
+    User user = new User("user3@test.com", "user3", UUID.randomUUID()
         .toString(), null, UserRole.USER);
     userRepository.createUser(user);
     User testUser = userRepository.findByEmailOrElseThrow(user.getEmail());
