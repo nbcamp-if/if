@@ -2,3 +2,17 @@ spring:
   profiles:
     active:
       - test
+    include:
+      - oauth2
+  config:
+    import:
+      - admin.properties
+      - db.properties
+      - jwt.properties
+    include:
+      - oauth2
+  config:
+    import:
+      - admin.properties
+      - db.properties
+      - jwt.properties
