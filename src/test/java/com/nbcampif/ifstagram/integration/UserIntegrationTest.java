@@ -87,22 +87,19 @@ public class UserIntegrationTest extends TestValues {
     void success() throws Exception {
       // given
       User user = TEST_USER1;
-      String newIntroduction = "Bloomberg johnny robots tsunami request attention kenya";
-      String newNickname = "GodwinLeach";
-      String newProfileImage = "http://hopyfulmp1l.pt";
 
       // when
       mockMvc.perform(put("/api/v1/users/my-page").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-              .content(("{\n" + "  \"introduction\": \"%s\",\n".formatted(newIntroduction)
-                        + "  \"nickname\": \"%s\",\n".formatted(newNickname)
-                        + "  \"profileImage\": \"%s\"\n".formatted(newProfileImage) + "}")))
+              .content(("{\n" + "  \"introduction\": \"%s\",\n".formatted(TEST_UPDATE_INTRODUCTION)
+                        + "  \"nickname\": \"%s\",\n".formatted(TEST_UPDATE_NICKNAME)
+                        + "  \"profileImage\": \"%s\"\n".formatted(TEST_UPDATE_PROFILEIMAGE) + "}")))
 
           // then
           .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
           .andExpect(jsonPath("$.message").value(endsWith("성공")))
-          .andExpect(jsonPath("$.data.introduction").value(newIntroduction))
-          .andExpect(jsonPath("$.data.nickname").value(newNickname))
-          .andExpect(jsonPath("$.data.profileImage").value(newProfileImage));
+          .andExpect(jsonPath("$.data.introduction").value(TEST_UPDATE_INTRODUCTION))
+          .andExpect(jsonPath("$.data.nickname").value(TEST_UPDATE_NICKNAME))
+          .andExpect(jsonPath("$.data.profileImage").value(TEST_UPDATE_PROFILEIMAGE));
     }
 
   }
@@ -114,11 +111,10 @@ public class UserIntegrationTest extends TestValues {
     @Test
     void success() throws Exception {
       // given
-      User user = TEST_USER1;
-      Long userId = TEST_USER2.getUserId();
+      Long reportedUserId = TEST_USER2.getUserId();
 
       // when
-      mockMvc.perform(post("/api/v1/users/reports/" + userId))
+      mockMvc.perform(post("/api/v1/users/reports/" + reportedUserId))
 
           // then
           .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
