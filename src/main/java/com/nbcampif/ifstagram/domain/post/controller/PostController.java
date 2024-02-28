@@ -86,4 +86,16 @@ public class PostController {
     return ResponseEntity.status(HttpStatus.OK.value()).body(
         CommonResponse.<Void>builder().message("게시글 삭제 성공").build());
   }
+
+  @GetMapping("/follow")
+  public ResponseEntity<CommonResponse<List<PostResponseDto>>> followPost(
+    @AuthenticationPrincipal User user
+  ) {
+    List<PostResponseDto> postList = postService.followPost(user);
+    return ResponseEntity.status(HttpStatus.OK.value()).body(
+      CommonResponse.<List<PostResponseDto>>builder()
+        .message("팔로우한 게시글 조회")
+        .data(postList)
+        .build());
+  }
 }
