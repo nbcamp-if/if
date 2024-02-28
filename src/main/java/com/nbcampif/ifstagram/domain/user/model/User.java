@@ -1,17 +1,18 @@
 package com.nbcampif.ifstagram.domain.user.model;
 
-import com.nbcampif.ifstagram.domain.auth.dto.SignupRequestDto;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class User implements OAuth2User {
 

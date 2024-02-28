@@ -118,7 +118,7 @@ class UserServiceTest extends TestValues {
       // given
       User user = TEST_USER1;
 
-      given(userRepository.findUserOrElseThrow(user.getUserId())).willReturn(user);
+      given(userRepository.findByEmailOrElseThrow(user.getEmail())).willReturn(user);
       given(userRepository.updateUser(any(UserUpdateRequestDto.class), any(User.class))).willReturn(TEST_UPDATED_USER);
 
       // when
