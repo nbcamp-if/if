@@ -12,7 +12,6 @@ import com.nbcampif.ifstagram.domain.report.repository.ReportRepository;
 import com.nbcampif.ifstagram.domain.user.UserRole;
 import com.nbcampif.ifstagram.domain.user.dto.ReportReponseDto;
 import com.nbcampif.ifstagram.domain.user.dto.UserResponseDto;
-import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.domain.user.repository.UserRepository;
 import com.nbcampif.ifstagram.global.exception.NotFoundUserException;

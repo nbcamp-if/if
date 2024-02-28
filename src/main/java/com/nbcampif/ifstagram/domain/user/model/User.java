@@ -49,23 +49,18 @@ public class User implements OAuth2User {
     this.profileImage = profileImage;
   }
 
-  public static User ofSignUp(SignupRequestDto requestDto) {
-    return new User(requestDto.getEmail(), requestDto.getNickname(), requestDto.getPassword(), DEFAULT_PROFILE_IMAGE);
+  public User(String adminEmail, String nickname, String password, String profileImage, UserRole role) {
+    this.email = adminEmail;
+    this.nickname = nickname;
+    this.password = password;
+    this.profileImage = profileImage;
+    this.role = role;
   }
-
 
   public static User ofOauth2(
       String email, String nickname, String profileImage
   ) {
     return new User(email, nickname, UUID.randomUUID().toString(), profileImage);
-  }
-
-  private User(Long userId, String email, String nickname, String profileImage) {
-    this.userId = userId;
-    this.email = email;
-    this.nickname = nickname;
-    this.password = UUID.randomUUID().toString();
-    this.profileImage = profileImage;
   }
 
   @Override
