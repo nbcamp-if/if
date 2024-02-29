@@ -43,7 +43,7 @@ public class PostService {
     postImageService.createImage(image, post);
   }
 
-  @Transactional(readOnly = true)
+//  @Transactional(readOnly = true)
   public List<PostResponseDto> getPostList() {
     return postRepository.findAll().stream().map(post -> {
         String imageUrl;
@@ -57,7 +57,7 @@ public class PostService {
       .toList();
   }
 
-  @Transactional(readOnly = true)
+//  @Transactional(readOnly = true)
   public PostResponseDto getPost(Long postId) throws MalformedURLException {
     Post post = findPost(postId);
     PostResponseDto responseDto = new PostResponseDto(
