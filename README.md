@@ -21,16 +21,11 @@
 *********************
 
 - <img src="https://img.shields.io/badge/Framework-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/3.2.3-515151?style=for-the-badge">
-- <img src="https://img.shields.io/badge/Build-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white"><img src="https://img.shields.io/badge/8.5-515151?style=for-the-badge">
-- <img src="https://img.shields.io/badge/CI-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/githubactions-pink?style=for-the-badge&logo=githubactions&logoColor=black"><img src="https://img.shields.io/badge/8.5-515151?style=for-the-badge">
-- <img src="https://img.shields.io/badge/Language-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"><img src="https://img.shields.io/badge/17-515151?style=for-the-badge">
-- <img src="https://img.shields.io/badge/Project Encoding-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/UTF 8-EA2328?style=for-the-badge">
-- <img src="https://img.shields.io/badge/DataBase-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/8.3-515151?style=for-the-badge">
-- <img src="https://img.shields.io/badge/Passing-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white"/>
 - <img src="https://img.shields.io/badge/Security-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"/>
+- <img src="https://img.shields.io/badge/Build-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white"><img src="https://img.shields.io/badge/8.5-515151?style=for-the-badge">
+- <img src="https://img.shields.io/badge/Language-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"><img src="https://img.shields.io/badge/17-515151?style=for-the-badge">
+- <img src="https://img.shields.io/badge/DataBase-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/8.3-515151?style=for-the-badge">
 - <img src="https://img.shields.io/badge/Oauth2.0-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/kakao-yellow?style=for-the-badge&logo=kakao&logoColor=white"/>
-- <img src="https://img.shields.io/badge/TEST-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/postman-orange?style=for-the-badge&logo=postman&logoColor=white"/>
-- <img src="https://img.shields.io/badge/OpenAPI-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black&"><img src="https://img.shields.io/badge/2.3.0-515151?style=for-the-badge">
 
 ### ⚙ 기능구현
 
