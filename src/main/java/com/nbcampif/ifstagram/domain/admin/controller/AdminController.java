@@ -10,6 +10,7 @@ import com.nbcampif.ifstagram.domain.user.dto.UserResponseDto;
 import com.nbcampif.ifstagram.domain.user.dto.UserUpdateRequestDto;
 import com.nbcampif.ifstagram.domain.user.model.User;
 import com.nbcampif.ifstagram.global.response.CommonResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -37,6 +38,7 @@ public class AdminController {
 
   private final AdminService adminService;
 
+  @Operation(summary = "관리자 로그인", description = "관리자 로그인")
   @PostMapping("/login")
   public ResponseEntity<CommonResponse<Void>> adminLogin(
     @RequestBody LoginRequestDto requestDto,
@@ -48,6 +50,7 @@ public class AdminController {
     );
   }
 
+  @Operation(summary = "유저 조회", description = "관리자가 유저를 조회할 수 있는 API")
   @GetMapping("/user/{userId}")
   public ResponseEntity<CommonResponse<UserResponseDto>> searchUser(
     @PathVariable Long userId,
@@ -62,6 +65,7 @@ public class AdminController {
     );
   }
 
+  @Operation(summary = "신고 내역 조회", description = "관리자가 신고 내역을 조회할 수 있는 API")
   @GetMapping("/report/{reportId}")
   public ResponseEntity<CommonResponse<List<ReportReponseDto>>> searchReport(
     @PathVariable Long reportId,
@@ -76,7 +80,7 @@ public class AdminController {
     );
   }
 
-
+  @Operation(summary = "유저 정보 수정", description = "관리자가 유저의 정보를 수정할 수 있는 API")
   @PutMapping("/user/{userId}")
   public ResponseEntity<CommonResponse<Void>> updateUser(
     @PathVariable Long userId,
@@ -91,6 +95,7 @@ public class AdminController {
     );
   }
 
+  @Operation(summary = "게시글 수정", description = "관리자가 게시글을 수정할 수 있는 API")
   @PutMapping("/post/{postId}")
   public ResponseEntity<CommonResponse<Void>> updatePost(
     @PathVariable Long postId,
@@ -106,6 +111,7 @@ public class AdminController {
     );
   }
 
+  @Operation(summary = "게시글 삭제", description = "관리자가 게시글을 삭제할 수 있는 API")
   @DeleteMapping("/post/{postId}")
   public ResponseEntity<CommonResponse<Void>> deletePost(
     @PathVariable Long postId,
@@ -119,6 +125,7 @@ public class AdminController {
     );
   }
 
+  @Operation(summary = "삭제된 게시글 조회", description = "관리자가 삭제된 게시글을 조회할 수 있는 API")
   @GetMapping("/posts/deleted")
   public ResponseEntity<CommonResponse<List<PostResponseDto>>> getDeletedPost() {
     List<PostResponseDto> responseList = adminService.getDeletedPost();
