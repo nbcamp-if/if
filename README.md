@@ -58,12 +58,10 @@
 
 **************
 
-- 자동화 테스트(
-  CI): ![Static Badge](https://img.shields.io/badge/githubactions-black?style=flat-square&logo=githubactions)![Static Badge](https://img.shields.io/badge/gradle-black?style=flat-square&logo=gradle&logoColor=cyan)
+- 자동 테스트(CI): ![Static Badge](https://img.shields.io/badge/githubactions-black?style=flat-square&logo=githubactions)![Static Badge](https://img.shields.io/badge/gradle-black?style=flat-square&logo=gradle&logoColor=cyan)
   - 통합 테스트
   - 단위 테스트
-- 수동
-  테스트: ![Static Badge](https://img.shields.io/badge/postman-black?style=flat-square&logo=postman&logoColor=orange)
+- 수동 테스트: ![Static Badge](https://img.shields.io/badge/postman-black?style=flat-square&logo=postman&logoColor=orange)
 
 ### 📜 API 명세서
 
